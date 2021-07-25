@@ -5,6 +5,8 @@ intent is to create a DSL that makes it easy to interface with any data source
 
 A sample vision of what the DSL will look like and how I envision it is mentioned below.
 
+### Example showcase for Google Analytics
+
 ````java
 
 import java.util.Iterator;
@@ -19,7 +21,7 @@ class GoogleAnalyticsApp {
                         .params("dimensions=XX, YY, ZZ")
                         .params("metrics=page_views,source,city");
 
-        GoogleAuthentication gAuth = new gAuth("Token");
+        GoogleAuthentication gAuth = new GoogleAuthentication("Token");
         String refreshToken = gAuth.getRefreshToken();
 
         GoogleAnalyticsSource gaSource = GoogleAnalyticsSource
@@ -32,12 +34,54 @@ class GoogleAnalyticsApp {
         Iterator itr = records.iterator();
         while (itr.hasNext()) {
             try {
-                // Logic to process data
-            }
-            catch(DataSetuAuthException e) {
+
+                DataSetuRow row = (DataSetuRow) itr.next();
+                System.out.println(row.getField("XX"));
+                System.out.println(row.getField("YY"));
+                System.out.println(row.getField("XX"));
+
+            } catch (DataSetuAuthException e) {
                 gAuth.refreshToken(refreshToken);
+            } catch (Exception e) {
+                break;
             }
-            catch (Exception e) {
+        }
+    }
+}
+````
+
+### Example showcase for MySQL
+
+````java
+
+import java.util.Iterator;
+
+class MySQLApp {
+    public static void main(String[] args) {
+
+        MySQLSpecification mySQLSpecification =
+                MySQLSpecification.query("SELECT a, b, c FROM table");
+
+        MySQLAuthentication mySQLAuthentication =
+                new MySQLAuthentication("hostname", "username", "password");
+
+        MySQLSource mySQLSource = MySQLSourcee
+                .withSpecification(mySQLSpecification)
+                .withAuthorization(mySQLAuthentication)
+                .buildSource();
+
+        Records records = MySQL.getRecords(gaSource);
+
+        Iterator itr = records.iterator();
+        while (itr.hasNext()) {
+            try {
+                DataSetuRow row = (DataSetuRow) itr.next();
+                System.out.println(row.getField("a"));
+                System.out.println(row.getField("b"));
+                System.out.println(row.getField("c"));
+            } catch (DataSetuAuthException e) {
+                // do specific logic to recover
+            } catch (Exception e) {
                 break;
             }
         }
