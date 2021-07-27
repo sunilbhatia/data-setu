@@ -9,26 +9,45 @@ import static org.testng.Assert.*;
 public class RecordsWithNamedFieldsAndDataTest {
 
     @Test
-    public void shouldCreateRecordsObjectWithNoData() {
+    public void shouldReturnZeroWhenNoRecordsAvailable() {
         Records records = new Records();
         assertEquals(records.count(), 0);
     }
 
 
     @Test
-    public void shouldCreateRecordsObjectWithNamedFields() {
-        String[] fieldList = new String[]{"field1", "field2", "field3"};
-        Records records = new Records(Arrays.asList(fieldList));
+    public void shouldReturnCorrectNumberOfRecords() {
+        Records records = getRecordObjectsWithNamedFieldsAndThreeRecords();
+        assertEquals(records.count(), 3);
+    }
 
-        Row row1 = new Row(new String[]{"data1", "data2", "data3"}, records);
-        Row row2 = new Row(new String[]{"data11", "data22", "data33"}, records);
-        Row row3 = new Row(new String[]{"data111", "data222", "data333"}, records);
-
-        records.insert(row1);
-        records.insert(row2);
-        records.insert(row3);
+    @Test
+    public void shouldCreateRecordsWithNamedFields() {
+        Records records = getRecordObjectsWithNamedFieldsAndThreeRecords();
 
         assertEquals(records.getRow(0).field("field1"), "data1");
+        assertEquals(records.getRow(0).field("field2"), "data2");
+        assertEquals(records.getRow(0).field("field3"), "data3");
+
+        assertEquals(records.getRow(1).field("field1"), "data11");
+        assertEquals(records.getRow(1).field("field2"), "data22");
+        assertEquals(records.getRow(1).field("field3"), "data33");
+
+        assertEquals(records.getRow(2).field("field1"), "data111");
+        assertEquals(records.getRow(2).field("field2"), "data222");
+        assertEquals(records.getRow(2).field("field3"), "data333");
+
+    }
+
+    public void shouldIterateOverNamedFieldRecords() {
+
+    }
+
+    @Test
+    public void shouldCreateRecordsObjectWithUnnamedFields() {
+        Records records = getRecordObjectsWithUnamedFieldsAndThreeRecords();
+
+        assertEquals(records.getRow(0).field(0), "data1");
         assertEquals(records.getRow(0).field(1), "data2");
         assertEquals(records.getRow(0).field(2), "data3");
 
@@ -36,30 +55,31 @@ public class RecordsWithNamedFieldsAndDataTest {
         assertEquals(records.getRow(1).field(1), "data22");
         assertEquals(records.getRow(1).field(2), "data33");
 
-        assertEquals(records.getFieldName(0), "field1");
-        assertEquals(records.getFieldName(1), "field2");
-        assertEquals(records.getFieldName(2), "field3");
-    }
-
-
-    @Test(expectedExceptions = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionOnInvalidFieldPosition() {
-        String[] fieldList = new String[]{"field1", "field2", "field3"};
-        Records records = new Records(Arrays.asList(fieldList));
-        assertEquals(records.getFieldName(3), "field4");
-    }
-
-
-    public void shouldIterateOverNamedFieldRecords() {
-
-    }
-
-    public void shouldCreateRecordsObjectWithUnnamedFields() {
-
+        assertEquals(records.getRow(2).field(0), "data111");
+        assertEquals(records.getRow(2).field(1), "data222");
+        assertEquals(records.getRow(2).field(2), "data333");
     }
 
     public void shouldIterateOverUnnamedFieldRecords() {
 
     }
 
+
+    private Records getRecordObjectsWithNamedFieldsAndThreeRecords() {
+        String[] fieldList = new String[]{"field1", "field2", "field3"};
+        Records records = new Records(Arrays.asList(fieldList));
+
+        records.insert(new String[]{"data1", "data2", "data3"});
+        records.insert(new String[]{"data11", "data22", "data33"});
+        records.insert(new String[]{"data111", "data222", "data333"});
+        return records;
+    }
+
+    private Records getRecordObjectsWithUnamedFieldsAndThreeRecords() {
+        Records records = new Records();
+        records.insert(new String[]{"data1", "data2", "data3"});
+        records.insert(new String[]{"data11", "data22", "data33"});
+        records.insert(new String[]{"data111", "data222", "data333"});
+        return records;
+    }
 }

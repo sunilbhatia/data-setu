@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Row {
 
-    List<String> rowData;
-    Records forRecord;
+    private List<String> rowData;
+    private Records forRecord;
 
-    public Row(String [] data, Records forRecord) {
+    public Row(String[] data, Records forRecord) {
         this.rowData = Arrays.asList(data);
         this.forRecord = forRecord;
     }
