@@ -1,4 +1,4 @@
-package dev.sunilb;
+package dev.sunilb.datasetu.entities;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +18,6 @@ public class Row {
     }
 
     public String field(String fieldName) {
-        return field(forRecord.getFieldPosition(fieldName));
+        return field(forRecord.getFieldPositionForGivenName(fieldName));
     }
 }

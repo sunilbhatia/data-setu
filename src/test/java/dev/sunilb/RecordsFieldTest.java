@@ -1,5 +1,7 @@
 package dev.sunilb;
 
+import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.exceptions.InvalidFieldException;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -14,9 +16,9 @@ public class RecordsFieldTest {
         String[] fieldList = new String[]{"field1", "field2", "field3"};
         Records records = new Records(Arrays.asList(fieldList));
 
-        assertEquals(records.getFieldName(0), "field1");
-        assertEquals(records.getFieldName(1), "field2");
-        assertEquals(records.getFieldName(2), "field3");
+        assertEquals(records.getFieldNameAtPosition(0), "field1");
+        assertEquals(records.getFieldNameAtPosition(1), "field2");
+        assertEquals(records.getFieldNameAtPosition(2), "field3");
     }
 
     @Test
@@ -25,26 +27,29 @@ public class RecordsFieldTest {
         String[] fieldList = new String[]{"field1", "field2", "field3"};
         Records records = new Records(Arrays.asList(fieldList));
 
-        assertEquals(records.getFieldPosition("field1"), 0);
-        assertEquals(records.getFieldPosition("field2"), 1);
-        assertEquals(records.getFieldPosition("field3"), 2);
+        assertEquals(records.getFieldPositionForGivenName("field1"), 0);
+        assertEquals(records.getFieldPositionForGivenName("field2"), 1);
+        assertEquals(records.getFieldPositionForGivenName("field3"), 2);
     }
 
-    @Test(expectedExceptions = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionOnInvalidFieldPosition() {
+    @Test(expectedExceptions = InvalidFieldException.class)
+    public void shouldThrowInvalidFieldExceptionWhenFieldPositionDoesNotExist() {
         String[] fieldList = new String[]{"field1", "field2", "field3"};
         Records records = new Records(Arrays.asList(fieldList));
-        assertEquals(records.getFieldName(3), "field4");
+        assertEquals(records.getFieldNameAtPosition(3), "field4");
+    }
+
+
+    @Test(expectedExceptions = InvalidFieldException.class)
+    public void shouldThrowInvalidFieldExceptionWhenFieldNameDoesNotExist() {
+        String[] fieldList = new String[]{"field1", "field2", "field3"};
+        Records records = new Records(Arrays.asList(fieldList));
+        assertEquals(records.getFieldPositionForGivenName("field4"), 3);
     }
 
     @Test
     public void shouldThrowRuntimeExceptionForDuplicateFieldName() {
         //TODO: validate duplicate fieldname
-    }
-
-    @Test
-    public void shouldThrowRuntimeExceptionWhenFieldNameOrPositionDoesNotExist() {
-        //TODO: trying to get a field that is not available
     }
 
 }

@@ -1,4 +1,6 @@
-package dev.sunilb;
+package dev.sunilb.datasetu.entities;
+
+import dev.sunilb.datasetu.exceptions.InvalidFieldException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,23 +17,23 @@ public class Records {
     }
 
     public Records() {
-        // TODO: initialize the fieldList to empty
         this.fieldList = new ArrayList<String>();
         this.records = new ArrayList<Row>();
     }
-
 
     public long count() {
         return records.size();
     }
 
-    public String getFieldName(int fieldPosition) {
-        if (fieldPosition >= fieldList.size()) throw new RuntimeException("Invalid Field Position");
+    public String getFieldNameAtPosition(int fieldPosition) {
+        if (fieldPosition >= fieldList.size()) throw new InvalidFieldException("Invalid Field Position");
         return fieldList.get(fieldPosition);
     }
 
-    public int getFieldPosition(String fieldName) {
-        return fieldList.indexOf(fieldName);
+    public int getFieldPositionForGivenName(String fieldName) {
+        int fieldPosition = fieldList.indexOf(fieldName);
+        if (fieldPosition == -1) throw new InvalidFieldException("Invalid Field Position");
+        return fieldPosition;
     }
 
     public void insert(String[] data) {
