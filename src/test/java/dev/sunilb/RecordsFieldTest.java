@@ -1,6 +1,7 @@
 package dev.sunilb;
 
 import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.exceptions.DuplicateFieldException;
 import dev.sunilb.datasetu.exceptions.InvalidFieldException;
 import org.testng.annotations.Test;
 
@@ -47,9 +48,11 @@ public class RecordsFieldTest {
         assertEquals(records.getFieldPositionForGivenName("field4"), 3);
     }
 
-    @Test
-    public void shouldThrowRuntimeExceptionForDuplicateFieldName() {
+    @Test(expectedExceptions = DuplicateFieldException.class)
+    public void shouldThrowDuplicateFieldExceptionForDuplicateFieldName() {
         //TODO: validate duplicate fieldname
+        String[] fieldList = new String[]{"field1", "field2", "field3", "field1"};
+        Records records = new Records(Arrays.asList(fieldList));
     }
 
 }

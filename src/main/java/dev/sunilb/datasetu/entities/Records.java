@@ -1,8 +1,10 @@
 package dev.sunilb.datasetu.entities;
 
+import dev.sunilb.datasetu.exceptions.DuplicateFieldException;
 import dev.sunilb.datasetu.exceptions.InvalidFieldException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Records {
@@ -12,9 +14,14 @@ public class Records {
     private List<Row> records;
 
     public Records(List<String> fieldList) {
+
+        if (doesFieldListHaveDuplicates(fieldList))
+            throw new DuplicateFieldException("field1 detected to be a duplicate");
+
         this.fieldList = new ArrayList<String>(fieldList);
         this.records = new ArrayList<Row>();
     }
+
 
     public Records() {
         this.fieldList = new ArrayList<String>();
@@ -43,5 +50,18 @@ public class Records {
 
     public Row getRow(int recordNumber) {
         return records.get(recordNumber);
+    }
+
+
+    private boolean doesFieldListHaveDuplicates(List<String> fieldList) {
+
+        HashMap<String, Integer> fieldMap = new HashMap<>();
+        fieldList.forEach(s -> {
+            fieldMap.put(s, 1);
+        });
+
+        if (fieldList.size() != fieldMap.size()) return true;
+
+        return false;
     }
 }
