@@ -1,6 +1,7 @@
 package dev.sunilb;
 
 import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.entities.Row;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -40,7 +41,24 @@ public class RecordsWithNamedFieldsAndDataTest {
 
     }
 
+    @Test
     public void shouldIterateOverNamedFieldRecords() {
+
+        Records records = getRecordObjectsWithNamedFieldsAndThreeRecords();
+
+        String[][] recordsToCompareWith = {
+                {"data1", "data2", "data3"},
+                {"data11", "data22", "data33"},
+                {"data111", "data222", "data333"},
+        };
+
+        int rowPosition = 0;
+        for (Row row : records) {
+            assertEquals(row.field("field1"), recordsToCompareWith[rowPosition][0]);
+            assertEquals(row.field("field2"), recordsToCompareWith[rowPosition][1]);
+            assertEquals(row.field("field3"), recordsToCompareWith[rowPosition][2]);
+            rowPosition = rowPosition + 1;
+        }
 
     }
 
@@ -61,7 +79,24 @@ public class RecordsWithNamedFieldsAndDataTest {
         assertEquals(records.getRow(2).field(2), "data333");
     }
 
-    public void shouldIterateOverUnnamedFieldRecords() {
+    @Test
+    public void shouldIterateOverUnamedFieldRecords() {
+
+        Records records = getRecordObjectsWithUnamedFieldsAndThreeRecords();
+
+        String[][] recordsToCompareWith = {
+                {"data1", "data2", "data3"},
+                {"data11", "data22", "data33"},
+                {"data111", "data222", "data333"},
+        };
+
+        int rowPosition = 0;
+        for (Row row : records) {
+            assertEquals(row.field(0), recordsToCompareWith[rowPosition][0]);
+            assertEquals(row.field(1), recordsToCompareWith[rowPosition][1]);
+            assertEquals(row.field(2), recordsToCompareWith[rowPosition][2]);
+            rowPosition = rowPosition + 1;
+        }
 
     }
 

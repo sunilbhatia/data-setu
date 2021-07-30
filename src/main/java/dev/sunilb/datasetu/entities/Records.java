@@ -5,9 +5,10 @@ import dev.sunilb.datasetu.exceptions.InvalidFieldException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-public class Records {
+public class Records implements Iterable<Row> {
 
     private long count;
     private List<String> fieldList;
@@ -64,4 +65,34 @@ public class Records {
 
         return false;
     }
+
+    @Override
+    public Iterator<Row> iterator() {
+        return new RecordsIterator<Row>(this);
+    }
+
+    private class RecordsIterator<Row> implements Iterator<Row> {
+
+        Records records;
+        int recordPosition;
+
+        public RecordsIterator(Records records) {
+            this.records = records;
+            this.recordPosition = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return recordPosition < records.count();
+        }
+
+        @Override
+        public Row next() {
+            Row row = (Row) records.getRow(recordPosition);
+            recordPosition = recordPosition + 1;
+            return row;
+
+        }
+    }
+
 }

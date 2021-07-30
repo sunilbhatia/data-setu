@@ -31,11 +31,8 @@ class GoogleAnalyticsApp {
 
         Records records = GoogleAnalytics.getRecords(gaSource);
 
-        Iterator itr = records.iterator();
-        while (itr.hasNext()) {
+        for (Row row : records) {
             try {
-
-                DataSetuRow row = (DataSetuRow) itr.next();
                 System.out.println(row.getField("XX"));
                 System.out.println(row.getField("YY"));
                 System.out.println(row.getField("XX"));
@@ -72,10 +69,8 @@ class MySQLApp {
 
         Records records = MySQL.getRecords(gaSource);
 
-        Iterator itr = records.iterator();
-        while (itr.hasNext()) {
+        for (Row row : records) {
             try {
-                DataSetuRow row = (DataSetuRow) itr.next();
                 System.out.println(row.getField("a"));
                 System.out.println(row.getField("b"));
                 System.out.println(row.getField("c"));
