@@ -50,7 +50,6 @@ public class RecordsFieldTest {
 
     @Test(expectedExceptions = DuplicateFieldException.class)
     public void shouldThrowDuplicateFieldExceptionForDuplicateFieldName() {
-        //TODO: validate duplicate fieldname
         String[] fieldList = new String[]{"field1", "field2", "field3", "field1"};
         Records records = new Records(Arrays.asList(fieldList));
     }
