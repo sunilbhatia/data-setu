@@ -1,4 +1,4 @@
-package dev.sunilb;
+package dev.sunilb.entities;
 
 import dev.sunilb.datasetu.entities.Records;
 import dev.sunilb.datasetu.entities.Row;
