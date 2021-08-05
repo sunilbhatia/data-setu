@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.entities.Row;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,30 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records>
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         List<String> fields = extractFields(node);
         Records records = new Records(fields);
+
+        insertRows(node, records);
+
         return records;
+    }
+
+    private void insertRows(JsonNode rootNode, Records records) {
+
+        JsonNode rowsNode = rootNode.get("reports").get(0).get("data").get("rows");
+
+        ArrayList<String> data = new ArrayList<>();
+        for(JsonNode row: rowsNode) {
+            for(JsonNode dimension: row.get("dimensions")) {
+                data.add(dimension.textValue());
+            }
+
+            for(JsonNode metric: row.get("metrics")) {
+                data.add(metric.get("values").get(0).textValue());
+            }
+
+            String []rowData = new String[data.size()];
+            records.insert(data.toArray(rowData));
+        }
+
     }
 
     private List<String> extractFields(JsonNode rootNode) {
