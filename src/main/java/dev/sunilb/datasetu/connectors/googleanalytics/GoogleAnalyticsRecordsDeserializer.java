@@ -34,14 +34,14 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records>
 
         JsonNode rowsNode = rootNode.get("reports").get(0).get("data").get("rows");
 
-        ArrayList<String> data = new ArrayList<>();
         for(JsonNode row: rowsNode) {
+            ArrayList<String> data = new ArrayList<>();
             for(JsonNode dimension: row.get("dimensions")) {
                 data.add(dimension.textValue());
             }
 
-            for(JsonNode metric: row.get("metrics")) {
-                data.add(metric.get("values").get(0).textValue());
+            for(JsonNode metric: row.get("metrics").get(0).get("values")) {
+                data.add(metric.textValue());
             }
 
             String []rowData = new String[data.size()];

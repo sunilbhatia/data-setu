@@ -68,7 +68,7 @@ public class GoogleAnalyticsTest {
     public void shouldGetRecordsAndCompareSecondSixthAndTenthRecord() {
         Records records = gaEnhanced.getRecords();
 
-        // Second, Sixth and TenthRecords from misc-ga-response.json file
+        // Second, Sixth and TenthRecords from misc-ga-response.json file - these are random records for validation
         int [] recordPositions = {1, 5, 9};
         String[][] sampleRecords = {
                 {"19900101", "(not set)", "Android Webview", "Returning Visitor", "(not set)", "facebook", "1", "1", "6"},
