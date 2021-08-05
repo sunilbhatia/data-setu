@@ -1,4 +1,4 @@
-package dev.sunilb.connectors.googleanalytics;
+package dev.sunilb.datasetu.connectors.googleanalytics;
 
 public class GoogleAuthentication {
     public GoogleAuthentication(String token) {

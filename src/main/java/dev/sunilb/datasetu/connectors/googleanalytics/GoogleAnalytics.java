@@ -1,4 +1,4 @@
-package dev.sunilb.connectors.googleanalytics;
+package dev.sunilb.datasetu.connectors.googleanalytics;
 
 import dev.sunilb.datasetu.entities.Records;
 
@@ -11,7 +11,9 @@ public class GoogleAnalytics {
     }
 
     public Records getRecords() {
-        Records records = gaSource.fetch();
+        String jsonString = gaSource.fetch();
+        System.out.println(jsonString);
+        Records records = new Records();
         return records;
     }
 }
