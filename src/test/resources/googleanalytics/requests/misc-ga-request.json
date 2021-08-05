@@ -1,0 +1,28 @@
+{
+  "reportRequests":
+  [
+    {
+      "viewId": "112233445566778899",
+      "dateRanges":
+      [
+        {"endDate": "1998-01-01", "startDate": "1998-01-01"}
+      ],
+      "metrics":
+      [
+        {"expression": "ga:users"},
+        {"expression": "ga:sessions"},
+        {"expression": "ga:pageviews"}
+      ],
+      "dimensions":
+      [
+        {"name": "ga:date"},
+        {"name": "ga:country"},
+        {"name": "ga:browser"},
+        {"name": "ga:userType"},
+        {"name": "ga:city"},
+        {"name": "ga:source"}
+      ],
+      "pageSize": 10
+    }
+  ]
+}
