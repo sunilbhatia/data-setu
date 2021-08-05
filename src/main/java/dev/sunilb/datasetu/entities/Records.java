@@ -33,6 +33,8 @@ public class Records implements Iterable<Row> {
         return records.size();
     }
 
+
+
     public String getFieldNameAtPosition(int fieldPosition) {
         if (fieldPosition >= fieldList.size()) throw new InvalidFieldException("Invalid Field Position");
         return fieldList.get(fieldPosition);
@@ -69,6 +71,10 @@ public class Records implements Iterable<Row> {
     @Override
     public Iterator<Row> iterator() {
         return new RecordsIterator<Row>(this);
+    }
+
+    public int fieldsCount() {
+        return fieldList.size();
     }
 
     private class RecordsIterator<Row> implements Iterator<Row> {

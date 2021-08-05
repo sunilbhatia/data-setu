@@ -33,6 +33,15 @@ public class RecordsFieldTest {
         assertEquals(records.getFieldPositionForGivenName("field3"), 2);
     }
 
+    @Test
+    public void shouldReturnFieldCount() {
+
+        String[] fieldList = new String[]{"field1", "field2", "field3"};
+        Records records = new Records(Arrays.asList(fieldList));
+
+        assertEquals(records.fieldsCount(), 3);
+    }
+
     @Test(expectedExceptions = InvalidFieldException.class)
     public void shouldThrowInvalidFieldExceptionWhenFieldPositionDoesNotExist() {
         String[] fieldList = new String[]{"field1", "field2", "field3"};

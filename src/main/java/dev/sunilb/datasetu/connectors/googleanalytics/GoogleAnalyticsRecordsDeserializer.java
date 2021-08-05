@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import dev.sunilb.datasetu.entities.Records;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records> {
 
@@ -16,22 +18,27 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records>
         super(vc);
     }
 
-    protected GoogleAnalyticsRecordsDeserializer(JavaType valueType) {
-        super(valueType);
-    }
-
-    protected GoogleAnalyticsRecordsDeserializer(StdDeserializer<?> src) {
-        super(src);
-    }
-
     @Override
     public Records deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        System.out.println(node.get("reports"));
-        /*int id = (Integer) ((IntNode) node.get("id")).numberValue();
-        String itemName = node.get("itemName").asText();
-        int userId = (Integer) ((IntNode) node.get("createdBy")).numberValue();*/
+        List<String> fields = extractFields(node);
+        Records records = new Records(fields);
+        return records;
+    }
 
-        return new Records();
+    private List<String> extractFields(JsonNode rootNode) {
+
+        ArrayList<String> fields = new ArrayList<>();
+        JsonNode columnNode = rootNode.get("reports").get(0).get("columnHeader");
+
+        for(JsonNode dimension: columnNode.get("dimensions")) {
+            fields.add(dimension.textValue());
+        }
+
+        for(JsonNode metric: columnNode.get("metricHeader").get("metricHeaderEntries")) {
+            fields.add(metric.get("name").textValue());
+        }
+
+        return fields;
     }
 }
