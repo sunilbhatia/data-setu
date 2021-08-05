@@ -13,11 +13,11 @@ public class Row {
         this.forRecord = forRecord;
     }
 
-    public String field(int fieldNumber) {
+    public String valueOfField(int fieldNumber) {
         return rowData.get(fieldNumber);
     }
 
-    public String field(String fieldName) {
-        return field(forRecord.getFieldPositionForGivenName(fieldName));
+    public String valueOfField(String fieldName) {
+        return valueOfField(forRecord.getFieldPositionForGivenName(fieldName));
     }
 }

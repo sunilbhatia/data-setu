@@ -27,17 +27,17 @@ public class RecordsWithNamedFieldsAndDataTest {
     public void shouldCreateRecordsWithNamedFields() {
         Records records = getRecordObjectsWithNamedFieldsAndThreeRecords();
 
-        assertEquals(records.getRow(0).field("field1"), "data1");
-        assertEquals(records.getRow(0).field("field2"), "data2");
-        assertEquals(records.getRow(0).field("field3"), "data3");
+        assertEquals(records.getRow(0).valueOfField("field1"), "data1");
+        assertEquals(records.getRow(0).valueOfField("field2"), "data2");
+        assertEquals(records.getRow(0).valueOfField("field3"), "data3");
 
-        assertEquals(records.getRow(1).field("field1"), "data11");
-        assertEquals(records.getRow(1).field("field2"), "data22");
-        assertEquals(records.getRow(1).field("field3"), "data33");
+        assertEquals(records.getRow(1).valueOfField("field1"), "data11");
+        assertEquals(records.getRow(1).valueOfField("field2"), "data22");
+        assertEquals(records.getRow(1).valueOfField("field3"), "data33");
 
-        assertEquals(records.getRow(2).field("field1"), "data111");
-        assertEquals(records.getRow(2).field("field2"), "data222");
-        assertEquals(records.getRow(2).field("field3"), "data333");
+        assertEquals(records.getRow(2).valueOfField("field1"), "data111");
+        assertEquals(records.getRow(2).valueOfField("field2"), "data222");
+        assertEquals(records.getRow(2).valueOfField("field3"), "data333");
 
     }
 
@@ -54,9 +54,9 @@ public class RecordsWithNamedFieldsAndDataTest {
 
         int rowPosition = 0;
         for (Row row : records) {
-            assertEquals(row.field("field1"), recordsToCompareWith[rowPosition][0]);
-            assertEquals(row.field("field2"), recordsToCompareWith[rowPosition][1]);
-            assertEquals(row.field("field3"), recordsToCompareWith[rowPosition][2]);
+            assertEquals(row.valueOfField("field1"), recordsToCompareWith[rowPosition][0]);
+            assertEquals(row.valueOfField("field2"), recordsToCompareWith[rowPosition][1]);
+            assertEquals(row.valueOfField("field3"), recordsToCompareWith[rowPosition][2]);
             rowPosition = rowPosition + 1;
         }
 
@@ -66,17 +66,17 @@ public class RecordsWithNamedFieldsAndDataTest {
     public void shouldCreateRecordsObjectWithUnnamedFields() {
         Records records = getRecordObjectsWithUnamedFieldsAndThreeRecords();
 
-        assertEquals(records.getRow(0).field(0), "data1");
-        assertEquals(records.getRow(0).field(1), "data2");
-        assertEquals(records.getRow(0).field(2), "data3");
+        assertEquals(records.getRow(0).valueOfField(0), "data1");
+        assertEquals(records.getRow(0).valueOfField(1), "data2");
+        assertEquals(records.getRow(0).valueOfField(2), "data3");
 
-        assertEquals(records.getRow(1).field(0), "data11");
-        assertEquals(records.getRow(1).field(1), "data22");
-        assertEquals(records.getRow(1).field(2), "data33");
+        assertEquals(records.getRow(1).valueOfField(0), "data11");
+        assertEquals(records.getRow(1).valueOfField(1), "data22");
+        assertEquals(records.getRow(1).valueOfField(2), "data33");
 
-        assertEquals(records.getRow(2).field(0), "data111");
-        assertEquals(records.getRow(2).field(1), "data222");
-        assertEquals(records.getRow(2).field(2), "data333");
+        assertEquals(records.getRow(2).valueOfField(0), "data111");
+        assertEquals(records.getRow(2).valueOfField(1), "data222");
+        assertEquals(records.getRow(2).valueOfField(2), "data333");
     }
 
     @Test
@@ -92,9 +92,9 @@ public class RecordsWithNamedFieldsAndDataTest {
 
         int rowPosition = 0;
         for (Row row : records) {
-            assertEquals(row.field(0), recordsToCompareWith[rowPosition][0]);
-            assertEquals(row.field(1), recordsToCompareWith[rowPosition][1]);
-            assertEquals(row.field(2), recordsToCompareWith[rowPosition][2]);
+            assertEquals(row.valueOfField(0), recordsToCompareWith[rowPosition][0]);
+            assertEquals(row.valueOfField(1), recordsToCompareWith[rowPosition][1]);
+            assertEquals(row.valueOfField(2), recordsToCompareWith[rowPosition][2]);
             rowPosition = rowPosition + 1;
         }
 

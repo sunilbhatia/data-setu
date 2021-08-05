@@ -1,0 +1,256 @@
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": [
+          "ga:date",
+          "ga:country",
+          "ga:browser",
+          "ga:userType",
+          "ga:city",
+          "ga:source"
+        ],
+        "metricHeader": {
+          "metricHeaderEntries": [
+            {
+              "name": "ga:users",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:sessions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:pageviews",
+              "type": "INTEGER"
+            }
+          ]
+        }
+      },
+      "data": {
+        "rows": [
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Android Webview",
+              "New Visitor",
+              "(not set)",
+              "(direct)"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Android Webview",
+              "Returning Visitor",
+              "(not set)",
+              "facebook"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1",
+                  "6"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "New Visitor",
+              "(not set)",
+              "(direct)"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "3",
+                  "3",
+                  "35"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "New Visitor",
+              "(not set)",
+              "facebook"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2",
+                  "11"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "New Visitor",
+              "(not set)",
+              "google"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "20",
+                  "20",
+                  "64"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "New Visitor",
+              "(not set)",
+              "in.search.yahoo.com"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1",
+                  "3"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "Returning Visitor",
+              "(not set)",
+              "(direct)"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Chrome",
+              "Returning Visitor",
+              "(not set)",
+              "google"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "10",
+                  "14",
+                  "76"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Edge",
+              "New Visitor",
+              "(not set)",
+              "google"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "2",
+                  "2",
+                  "5"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "(not set)",
+              "Firefox",
+              "New Visitor",
+              "(not set)",
+              "google"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "1",
+                  "1",
+                  "1"
+                ]
+              }
+            ]
+          }
+        ],
+        "totals": [
+          {
+            "values": [
+              "10",
+              "10",
+              "10"
+            ]
+          }
+        ],
+        "rowCount": 10,
+        "minimums": [
+          {
+            "values": [
+              "1",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        "maximums": [
+          {
+            "values": [
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        ],
+        "isDataGolden": true
+      },
+      "nextPageToken": "10"
+    }
+  ]
+}

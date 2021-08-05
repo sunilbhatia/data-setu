@@ -27,6 +27,7 @@ public class GoogleAnalytics {
             records = mapper.readValue(json, Records.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            //TODO: Raise DataSetuException
         }
 
         return records;
