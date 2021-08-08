@@ -1,5 +1,6 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
+import dev.sunilb.datasetu.Page;
 import dev.sunilb.datasetu.connectors.DataSetuSource;
 import dev.sunilb.datasetu.entities.Records;
 
@@ -10,6 +11,7 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
     private GoogleAnalyticsSpecification specification;
     private GoogleAuthentication authentication;
+    private Page page;
 
     private void GoogleAnalyticsSource() {
 
@@ -31,6 +33,11 @@ public class GoogleAnalyticsSource implements DataSetuSource {
     public GoogleAnalyticsSource withAuth(GoogleAuthentication authentication) {
         this.authentication = authentication;
         return this;
+    }
+
+    @Override
+    public void updatePage(Page page) {
+        this.page = page;
     }
 
     @Override

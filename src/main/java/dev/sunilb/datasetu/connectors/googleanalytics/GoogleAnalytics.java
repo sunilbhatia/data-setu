@@ -15,7 +15,7 @@ public class GoogleAnalytics {
         this.gaSource = gaSource;
     }
 
-    public Records getRecords() {
+    private GoogleAnalyticsRecordsDeserializerResponse getGAResponse() throws JsonProcessingException {
         String json = gaSource.fetch();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -23,13 +23,21 @@ public class GoogleAnalytics {
         module.addDeserializer(GoogleAnalyticsRecordsDeserializerResponse.class, new GoogleAnalyticsRecordsDeserializer(GoogleAnalyticsRecordsDeserializerResponse.class));
         mapper.registerModule(module);
 
+        return mapper.readValue(json, GoogleAnalyticsRecordsDeserializerResponse.class);
+    }
+
+    public Records getRecords() {
+
         GoogleAnalyticsRecordsDeserializerResponse gaResponse = null;
         Records records = null;
 
         try {
-            gaResponse = mapper.readValue(json, GoogleAnalyticsRecordsDeserializerResponse.class);
+            gaResponse = getGAResponse();
             records = gaResponse.getRecords();
+
             this.page = gaResponse.getPage();
+            this.gaSource.updatePage(this.page);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             //TODO: Raise DataSetuException

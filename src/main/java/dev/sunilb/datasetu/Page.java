@@ -2,8 +2,13 @@ package dev.sunilb.datasetu;
 
 public class Page {
 
-    private int rowCount;
-    private String nextPageToken;
+    final private int rowCount;
+    final private String nextPageToken;
+
+    public Page() {
+        rowCount = 0;
+        nextPageToken = "";
+    }
 
     public Page(int rowCount, String nextPageToken) {
         this.rowCount = rowCount;

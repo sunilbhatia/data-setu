@@ -10,8 +10,8 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
 import static dev.sunilb.helpers.TestHelpers.*;
+import static org.testng.Assert.*;
 
 public class GoogleAnalyticsTest {
 
@@ -67,10 +67,10 @@ public class GoogleAnalyticsTest {
 
     @Test
     public void hasNextShouldAlwaysReturnTrueAtFirstWhenRecordsAreNotYetLoadedAndThenFalseWhenNoRecordsAreAvailable() {
-        assertEquals(gaNoRecordsHasNextCheck.hasNext(), true);
+        assertTrue(gaNoRecordsHasNextCheck.hasNext());
         Records records = gaNoRecordsHasNextCheck.getRecords();
         assertEquals(records.count(), 0);
-        assertEquals(gaNoRecordsHasNextCheck.hasNext(), false);
+        assertFalse(gaNoRecordsHasNextCheck.hasNext());
     }
 
     @Test
