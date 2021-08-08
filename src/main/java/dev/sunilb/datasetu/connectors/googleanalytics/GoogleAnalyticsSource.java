@@ -1,11 +1,7 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
-import dev.sunilb.datasetu.Page;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.connectors.DataSetuSource;
-import dev.sunilb.datasetu.entities.Records;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GoogleAnalyticsSource implements DataSetuSource {
 

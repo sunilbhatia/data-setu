@@ -1,6 +1,6 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
-import dev.sunilb.datasetu.Page;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 
 public class GoogleAnalyticsRecordsDeserializerResponse {

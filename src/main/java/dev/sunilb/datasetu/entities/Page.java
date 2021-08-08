@@ -1,4 +1,4 @@
-package dev.sunilb.datasetu;
+package dev.sunilb.datasetu.entities;
 
 public class Page {
 

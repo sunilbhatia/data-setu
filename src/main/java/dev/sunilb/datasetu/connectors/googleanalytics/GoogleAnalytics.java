@@ -3,7 +3,7 @@ package dev.sunilb.datasetu.connectors.googleanalytics;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import dev.sunilb.datasetu.Page;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 
 public class GoogleAnalytics {

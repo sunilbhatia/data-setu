@@ -26,7 +26,11 @@ public class GoogleAnalyticsPaginationTest {
             String lastPageJson = getResourceStreamAsString("googleanalytics/pagination/responses/last-page-response.json");
 
             GoogleAnalyticsSource gaBasicSource = mock(GoogleAnalyticsSource.class);
-            when(gaBasicSource.fetch()).thenReturn(firstPageJson).thenReturn(secondPageJson).thenReturn(thirdPageJson).thenReturn(lastPageJson);
+            when(gaBasicSource.fetch())
+                    .thenReturn(firstPageJson)
+                    .thenReturn(secondPageJson)
+                    .thenReturn(thirdPageJson)
+                    .thenReturn(lastPageJson);
 
             this.gaBasicPagination = new GoogleAnalytics(gaBasicSource);
 
@@ -40,12 +44,17 @@ public class GoogleAnalyticsPaginationTest {
 
         assertTrue(gaBasicPagination.hasNext());
         assertEquals(gaBasicPagination.getRecords().count(), 10);
+
         assertTrue(gaBasicPagination.hasNext());
         assertEquals(gaBasicPagination.getRecords().count(), 10);
+
         assertTrue(gaBasicPagination.hasNext());
         assertEquals(gaBasicPagination.getRecords().count(), 10);
+
+        assertTrue(gaBasicPagination.hasNext());
+        assertEquals(gaBasicPagination.getRecords().count(), 1);
+
         assertFalse(gaBasicPagination.hasNext());
-        assertEquals(gaBasicPagination.getRecords().count(), 10);
 
     }
 

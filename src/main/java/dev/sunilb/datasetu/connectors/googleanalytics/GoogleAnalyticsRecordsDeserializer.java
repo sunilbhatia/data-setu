@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import dev.sunilb.datasetu.Page;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 
 import java.io.IOException;
