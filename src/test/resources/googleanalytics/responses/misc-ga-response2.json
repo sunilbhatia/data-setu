@@ -1,0 +1,145 @@
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": [
+          "ga:date",
+          "ga:userType"
+        ],
+        "metricHeader": {
+          "metricHeaderEntries": [
+            {
+              "name": "ga:users",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:newUsers",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:sessions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:bounces",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:sessionDuration",
+              "type": "TIME"
+            },
+            {
+              "name": "ga:transactions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:transactionRevenue",
+              "type": "CURRENCY"
+            },
+            {
+              "name": "ga:revenuePerTransaction",
+              "type": "CURRENCY"
+            },
+            {
+              "name": "ga:percentNewSessions",
+              "type": "PERCENT"
+            }
+          ]
+        }
+      },
+      "data": {
+        "rows": [
+          {
+            "dimensions": [
+              "19900101",
+              "New Visitor"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "11393",
+                  "11438",
+                  "11434",
+                  "6227",
+                  "905228.0",
+                  "1",
+                  "0.0",
+                  "0.0",
+                  "100.03498338289312"
+                ]
+              }
+            ]
+          },
+          {
+            "dimensions": [
+              "19900101",
+              "Returning Visitor"
+            ],
+            "metrics": [
+              {
+                "values": [
+                  "4322",
+                  "0",
+                  "5412",
+                  "3095",
+                  "812502.0",
+                  "12",
+                  "0.0",
+                  "0.0",
+                  "0.0"
+                ]
+              }
+            ]
+          }
+        ],
+        "totals": [
+          {
+            "values": [
+              "15715",
+              "11438",
+              "16846",
+              "9322",
+              "1717730.0",
+              "13",
+              "0.0",
+              "0.0",
+              "67.89742372076458"
+            ]
+          }
+        ],
+        "rowCount": 2,
+        "minimums": [
+          {
+            "values": [
+              "4322",
+              "0",
+              "5412",
+              "3095",
+              "812502.0",
+              "1",
+              "0.0",
+              "0.0",
+              "0.0"
+            ]
+          }
+        ],
+        "maximums": [
+          {
+            "values": [
+              "11393",
+              "11438",
+              "11434",
+              "6227",
+              "905228.0",
+              "12",
+              "0.0",
+              "0.0",
+              "100.03498338289312"
+            ]
+          }
+        ],
+        "isDataGolden": true
+      }
+    }
+  ]
+}

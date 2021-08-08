@@ -19,8 +19,8 @@ This list will be updated with the behavior needed from the system and also a fe
 - Support Rows to have data types (Low priority)
 
 ### For Google Analytics:
-- Get fixed json response from google analytics and convert it to records - 1 Json File Mocked
-- Get dynamic json response from google analytics and convert it to records (map from dynamic fields to Rows) - 3 Json Files Mocked with Different Dimensions & Metrics
+- ~~Get fixed json response from google analytics and convert it to records - 1 Json File Mocked~~
+- ~~Get dynamic json response from google analytics and convert it to records (map from dynamic fields to Rows) - 3 Json Files Mocked with Different Dimensions & Metrics~~
 - Paginate through the results
 - Auto refresh the token and make a callback to client for update in their database
 - In case auto refresh is disabled, then raise an exception for token expiry and after a new token is provided, continue paginating or querying

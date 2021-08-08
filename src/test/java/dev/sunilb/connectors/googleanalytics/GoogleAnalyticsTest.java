@@ -17,6 +17,7 @@ public class GoogleAnalyticsTest {
 
     GoogleAnalytics gaBasic;
     GoogleAnalytics gaEnhanced;
+    GoogleAnalytics gaEnhanced2;
 
     @BeforeClass
     public void setup() {
@@ -24,6 +25,7 @@ public class GoogleAnalyticsTest {
         try {
             String jsonBasic = getResourceStreamAsString("googleanalytics/responses/country-users-response.json");
             String jsonEnhanced = getResourceStreamAsString("googleanalytics/responses/misc-ga-response.json");
+            String jsonEnhanced2 = getResourceStreamAsString("googleanalytics/responses/misc-ga-response2.json");
 
             GoogleAnalyticsSource gaBasicSource = mock(GoogleAnalyticsSource.class);
             when(gaBasicSource.fetch()).thenReturn(jsonBasic);
@@ -32,6 +34,10 @@ public class GoogleAnalyticsTest {
             GoogleAnalyticsSource gaEnhancedSource = mock(GoogleAnalyticsSource.class);
             when(gaEnhancedSource.fetch()).thenReturn(jsonEnhanced);
             this.gaEnhanced = new GoogleAnalytics(gaEnhancedSource);
+
+            GoogleAnalyticsSource gaEnhancedSource2 = mock(GoogleAnalyticsSource.class);
+            when(gaEnhancedSource2.fetch()).thenReturn(jsonEnhanced2);
+            this.gaEnhanced2 = new GoogleAnalytics(gaEnhancedSource2);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +75,7 @@ public class GoogleAnalyticsTest {
         Records records = gaEnhanced.getRecords();
 
         // Second, Sixth and TenthRecords from misc-ga-response.json file - these are random records for validation
-        int [] recordPositions = {1, 5, 9};
+        int[] recordPositions = {1, 5, 9};
         String[][] sampleRecords = {
                 {"19900101", "(not set)", "Android Webview", "Returning Visitor", "(not set)", "facebook", "1", "1", "6"},
                 {"19900101", "(not set)", "Chrome", "New Visitor", "(not set)", "in.search.yahoo.com", "1", "1", "3"},
@@ -80,16 +86,32 @@ public class GoogleAnalyticsTest {
 
 
         int index = 0;
-        for(String [] sampleRecord: sampleRecords) {
+        for (String[] sampleRecord : sampleRecords) {
             int recordNumber = recordPositions[index];
             Row row = records.getRow(recordNumber);
 
-            for(String fieldName : fieldList) {
+            for (String fieldName : fieldList) {
                 assertEquals(row.valueOfField(fieldName), sampleRecord[records.getFieldPositionForGivenName(fieldName)]);
             }
 
             index = index + 1;
 
+        }
+
+    }
+
+
+    @Test
+    public void shouldGetMoreRecordsAndCompareLastRecord() {
+        Records records = gaEnhanced2.getRecords();
+
+        String[] response = {"19900101", "Returning Visitor", "4322", "0", "5412", "3095", "812502.0", "12", "0.0", "0.0", "0.0"};
+
+        String[] fieldList = {"ga:date", "ga:userType", "ga:users", "ga:newUsers", "ga:sessions", "ga:bounces", "ga:sessionDuration", "ga:transactions", "ga:transactionRevenue", "ga:revenuePerTransaction", "ga:percentNewSessions"};
+
+        Row row = records.getRow(1);
+        for (String fieldName : fieldList) {
+            assertEquals(row.valueOfField(fieldName), response[records.getFieldPositionForGivenName(fieldName)]);
         }
 
     }
