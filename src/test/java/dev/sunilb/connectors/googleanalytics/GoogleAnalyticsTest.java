@@ -17,6 +17,7 @@ public class GoogleAnalyticsTest {
 
     GoogleAnalytics gaBasic;
     GoogleAnalytics gaNoRecords;
+    GoogleAnalytics gaNoRecordsHasNextCheck;
     GoogleAnalytics gaEnhanced;
     GoogleAnalytics gaEnhanced2;
 
@@ -25,7 +26,8 @@ public class GoogleAnalyticsTest {
 
         try {
             String jsonBasic = getResourceStreamAsString("googleanalytics/basicsanity/responses/country-users-response.json");
-            String jsonNoRecords = getResourceStreamAsString("googleanalytics/basicsanity/responses/no-records-found-for-query.json");
+            String jsonNoRecords = getResourceStreamAsString("googleanalytics/basicsanity/responses/no-records-found-for-query-response.json");
+            String jsonNoRecordsHasNext = getResourceStreamAsString("googleanalytics/basicsanity/responses/no-records-found-for-query-response.json");
             String jsonEnhanced = getResourceStreamAsString("googleanalytics/basicsanity/responses/misc-ga-response.json");
             String jsonEnhanced2 = getResourceStreamAsString("googleanalytics/basicsanity/responses/misc-ga-response2.json");
 
@@ -33,9 +35,13 @@ public class GoogleAnalyticsTest {
             when(gaBasicSource.fetch()).thenReturn(jsonBasic);
             this.gaBasic = new GoogleAnalytics(gaBasicSource);
 
-            GoogleAnalyticsSource gaNoRecords = mock(GoogleAnalyticsSource.class);
-            when(gaNoRecords.fetch()).thenReturn(jsonNoRecords);
-            this.gaNoRecords = new GoogleAnalytics(gaNoRecords);
+            GoogleAnalyticsSource gaNoRecordsSource = mock(GoogleAnalyticsSource.class);
+            when(gaNoRecordsSource.fetch()).thenReturn(jsonNoRecords);
+            this.gaNoRecords = new GoogleAnalytics(gaNoRecordsSource);
+
+            GoogleAnalyticsSource gaNoRecordsHasNextSource = mock(GoogleAnalyticsSource.class);
+            when(gaNoRecordsHasNextSource.fetch()).thenReturn(jsonNoRecordsHasNext);
+            this.gaNoRecordsHasNextCheck = new GoogleAnalytics(gaNoRecordsHasNextSource);
 
             GoogleAnalyticsSource gaEnhancedSource = mock(GoogleAnalyticsSource.class);
             when(gaEnhancedSource.fetch()).thenReturn(jsonEnhanced);
@@ -57,6 +63,14 @@ public class GoogleAnalyticsTest {
         assertEquals(records.getFieldNameAtPosition(0), "ga:country");
         assertEquals(records.getFieldNameAtPosition(1), "ga:users");
         assertEquals(records.count(), 73);
+    }
+
+    @Test
+    public void hasNextShouldAlwaysReturnTrueAtFirstWhenRecordsAreNotYetLoadedAndThenFalseWhenNoRecordsAreAvailable() {
+        assertEquals(gaNoRecordsHasNextCheck.hasNext(), true);
+        Records records = gaNoRecordsHasNextCheck.getRecords();
+        assertEquals(records.count(), 0);
+        assertEquals(gaNoRecordsHasNextCheck.hasNext(), false);
     }
 
     @Test

@@ -1,0 +1,30 @@
+{
+  "reportRequests":
+  [
+    {
+      "viewId": "112233445566778899",
+      "dateRanges":
+      [
+        {"endDate": "1998-07-31", "startDate": "1998-07-01"}
+      ],
+      "metrics":
+      [
+        {"expression": "ga:users"},
+        {"expression": "ga:newUsers"},
+        {"expression": "ga:sessions"},
+        {"expression": "ga:bounces"},
+        {"expression": "ga:sessionDuration"},
+        {"expression": "ga:transactions"},
+        {"expression": "ga:transactionRevenue"},
+        {"expression": "ga:revenuePerTransaction"},
+        {"expression": "ga:percentNewSessions"}
+      ],
+      "dimensions":
+      [
+        {"name": "ga:date"}
+      ],
+      "pageSize":10,
+      "pageToken": "20"
+    }
+  ]
+}
