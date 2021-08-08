@@ -8,7 +8,7 @@ import dev.sunilb.datasetu.entities.Records;
 
 public class GoogleAnalytics {
 
-    private GoogleAnalyticsSource gaSource;
+    private final GoogleAnalyticsSource gaSource;
     private Page page;
 
     public GoogleAnalytics(GoogleAnalyticsSource gaSource) {
@@ -47,7 +47,7 @@ public class GoogleAnalytics {
     }
 
     public boolean hasNext() {
-        if (this.page == null) return true;
+        if (this.page == null) return true; // should return true if the first cursor has not been fetched
         return this.page.hasNext();
     }
 }
