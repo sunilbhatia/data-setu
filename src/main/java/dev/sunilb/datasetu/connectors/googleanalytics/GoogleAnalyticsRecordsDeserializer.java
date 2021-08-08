@@ -34,6 +34,8 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records>
 
         JsonNode rowsNode = rootNode.get("reports").get(0).get("data").get("rows");
 
+        if(doesRecordsExist(rowsNode) == false) return;
+
         for(JsonNode row: rowsNode) {
             ArrayList<String> data = new ArrayList<>();
             for(JsonNode dimension: row.get("dimensions")) {
@@ -48,6 +50,10 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<Records>
             records.insert(data.toArray(rowData));
         }
 
+    }
+
+    private boolean doesRecordsExist(JsonNode rowsNode) {
+        return !(rowsNode == null);
     }
 
     private List<String> extractFields(JsonNode rootNode) {

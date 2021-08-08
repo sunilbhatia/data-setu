@@ -16,6 +16,7 @@ import static dev.sunilb.helpers.TestHelpers.*;
 public class GoogleAnalyticsTest {
 
     GoogleAnalytics gaBasic;
+    GoogleAnalytics gaNoRecords;
     GoogleAnalytics gaEnhanced;
     GoogleAnalytics gaEnhanced2;
 
@@ -23,13 +24,18 @@ public class GoogleAnalyticsTest {
     public void setup() {
 
         try {
-            String jsonBasic = getResourceStreamAsString("googleanalytics/responses/country-users-response.json");
-            String jsonEnhanced = getResourceStreamAsString("googleanalytics/responses/misc-ga-response.json");
-            String jsonEnhanced2 = getResourceStreamAsString("googleanalytics/responses/misc-ga-response2.json");
+            String jsonBasic = getResourceStreamAsString("googleanalytics/basicsanity/responses/country-users-response.json");
+            String jsonNoRecords = getResourceStreamAsString("googleanalytics/basicsanity/responses/no-records-found-for-query.json");
+            String jsonEnhanced = getResourceStreamAsString("googleanalytics/basicsanity/responses/misc-ga-response.json");
+            String jsonEnhanced2 = getResourceStreamAsString("googleanalytics/basicsanity/responses/misc-ga-response2.json");
 
             GoogleAnalyticsSource gaBasicSource = mock(GoogleAnalyticsSource.class);
             when(gaBasicSource.fetch()).thenReturn(jsonBasic);
             this.gaBasic = new GoogleAnalytics(gaBasicSource);
+
+            GoogleAnalyticsSource gaNoRecords = mock(GoogleAnalyticsSource.class);
+            when(gaNoRecords.fetch()).thenReturn(jsonNoRecords);
+            this.gaNoRecords = new GoogleAnalytics(gaNoRecords);
 
             GoogleAnalyticsSource gaEnhancedSource = mock(GoogleAnalyticsSource.class);
             when(gaEnhancedSource.fetch()).thenReturn(jsonEnhanced);
@@ -51,6 +57,22 @@ public class GoogleAnalyticsTest {
         assertEquals(records.getFieldNameAtPosition(0), "ga:country");
         assertEquals(records.getFieldNameAtPosition(1), "ga:users");
         assertEquals(records.count(), 73);
+    }
+
+    @Test
+    public void shouldReturnAnEmptyRecordsObjectWhenNoRecordsAreFound() {
+        Records records = gaNoRecords.getRecords();
+
+        String[] fieldList = {"ga:date", "ga:userType", "ga:users", "ga:newUsers", "ga:sessions", "ga:bounces", "ga:sessionDuration", "ga:transactions", "ga:transactionRevenue", "ga:revenuePerTransaction", "ga:percentNewSessions"};
+
+        assertEquals(records.count(), 0);
+        //TODO: Implement a check for hasNext as well as this should also return false
+//        assertEquals(records.hasNext(), false);
+
+        for (int i = 0; i < fieldList.length; i++) {
+            assertEquals(records.getFieldNameAtPosition(i), fieldList[i]);
+        }
+
     }
 
     @Test

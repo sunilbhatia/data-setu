@@ -1,0 +1,70 @@
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": [
+          "ga:date",
+          "ga:userType"
+        ],
+        "metricHeader": {
+          "metricHeaderEntries": [
+            {
+              "name": "ga:users",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:newUsers",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:sessions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:bounces",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:sessionDuration",
+              "type": "TIME"
+            },
+            {
+              "name": "ga:transactions",
+              "type": "INTEGER"
+            },
+            {
+              "name": "ga:transactionRevenue",
+              "type": "CURRENCY"
+            },
+            {
+              "name": "ga:revenuePerTransaction",
+              "type": "CURRENCY"
+            },
+            {
+              "name": "ga:percentNewSessions",
+              "type": "PERCENT"
+            }
+          ]
+        }
+      },
+      "data": {
+        "totals": [
+          {
+            "values": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0.0",
+              "0",
+              "0.0",
+              "0.0",
+              "0.0"
+            ]
+          }
+        ],
+        "isDataGolden": true
+      }
+    }
+  ]
+}
