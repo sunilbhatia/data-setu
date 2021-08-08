@@ -35,12 +35,10 @@ public class GoogleAnalyticsRecordsDeserializer extends StdDeserializer<GoogleAn
         JsonNode nextPageTokenNode = node.get("reports").get(0).get("nextPageToken");
 
         int rowCount = 0;
-        if (rowsNode != null)
-            Integer.parseInt(rowsNode.textValue());
+        if (rowsNode != null) rowCount = rowsNode.intValue();
 
         String nextPageToken = null;
-        if (nextPageTokenNode != null)
-            nextPageToken = nextPageTokenNode.textValue();
+        if (nextPageTokenNode != null) nextPageToken = nextPageTokenNode.textValue();
 
         return new Page(rowCount, nextPageToken);
     }
