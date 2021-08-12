@@ -6,6 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.lang.annotation.Documented;
 
 import static dev.sunilb.helpers.TestHelpers.getResourceStreamAsString;
 import static org.mockito.Mockito.mock;
