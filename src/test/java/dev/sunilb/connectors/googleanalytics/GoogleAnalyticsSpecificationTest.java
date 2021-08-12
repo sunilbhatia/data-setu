@@ -1,16 +1,13 @@
 package dev.sunilb.connectors.googleanalytics;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsSpecification;
-import dev.sunilb.datasetu.entities.Page;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
 import static dev.sunilb.helpers.TestHelpers.getResourceStreamAsString;
-import static org.testng.Assert.assertEquals;
+import static dev.sunilb.helpers.TestHelpers.isJsonEqual;
 import static org.testng.Assert.assertTrue;
 
 public class GoogleAnalyticsSpecificationTest {
@@ -35,8 +32,5 @@ public class GoogleAnalyticsSpecificationTest {
 
     }
 
-    private boolean isJsonEqual(String compareJson, String withJson) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readTree(compareJson).equals(mapper.readTree(withJson));
-    }
+
 }
