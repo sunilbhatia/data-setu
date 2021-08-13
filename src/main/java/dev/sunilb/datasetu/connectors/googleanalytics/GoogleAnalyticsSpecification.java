@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import dev.sunilb.datasetu.entities.DateRange;
 
 import java.util.*;
 
@@ -12,16 +13,16 @@ public class GoogleAnalyticsSpecification {
 
     private Map<String, String> params;
     private String viewId;
-    private String endDate;
-    private String startDate;
     private List<String> metrics;
     private List<String> dimensions;
+    private List<DateRange> dateRanges;
     private int pageSize;
 
     private GoogleAnalyticsSpecification() {
         this.params = new HashMap<>();
         this.metrics = new ArrayList<>();
         this.dimensions = new ArrayList<>();
+        this.dateRanges = new ArrayList<>();
         this.pageSize = 5; //TODO: Find the default page size and set it to that.
     }
 
@@ -40,8 +41,9 @@ public class GoogleAnalyticsSpecification {
     }
 
     public GoogleAnalyticsSpecification forDateRange(String startDate, String endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+
+        DateRange dateRange = new DateRange(startDate, endDate);
+        this.dateRanges.add(dateRange);
         return this;
     }
 
@@ -64,9 +66,12 @@ public class GoogleAnalyticsSpecification {
         reportRequestNode.put("viewId", this.viewId);
 
         ArrayNode reportDateRanges = reportRequestNode.putArray("dateRanges");
-        ObjectNode reportDateRangeNode = reportDateRanges.addObject();
-        reportDateRangeNode.put("startDate", this.startDate);
-        reportDateRangeNode.put("endDate", this.endDate);
+        ObjectNode reportDateRangeNode = null;
+        for(DateRange dateRange: dateRanges) {
+            reportDateRangeNode = reportDateRanges.addObject();
+            reportDateRangeNode.put("startDate", dateRange.getStartDate());
+            reportDateRangeNode.put("endDate", dateRange.getEndDate());
+        }
 
         ArrayNode metricsNode = reportRequestNode.putArray("metrics");
         ObjectNode metricsObject = null;
