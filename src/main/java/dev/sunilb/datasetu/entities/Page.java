@@ -19,4 +19,7 @@ public class Page {
         return nextPageToken != null;
     }
 
+    public String getNextPageToken() {
+        return nextPageToken;
+    }
 }

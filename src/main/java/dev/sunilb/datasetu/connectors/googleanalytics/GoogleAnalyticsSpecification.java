@@ -17,6 +17,7 @@ public class GoogleAnalyticsSpecification {
     private List<String> dimensions;
     private List<DateRange> dateRanges;
     private int pageSize;
+    private String nextPageToken;
 
     private GoogleAnalyticsSpecification() {
         this.params = new HashMap<>();
@@ -24,6 +25,7 @@ public class GoogleAnalyticsSpecification {
         this.dimensions = new ArrayList<>();
         this.dateRanges = new ArrayList<>();
         this.pageSize = 5; //TODO: Find the default page size and set it to that.
+        this.nextPageToken = "";
     }
 
     public static GoogleAnalyticsSpecification Builder() {
@@ -92,6 +94,10 @@ public class GoogleAnalyticsSpecification {
 
         reportRequestNode.put("pageSize", this.pageSize);
 
+        if(!this.nextPageToken.isEmpty()) {
+            reportRequestNode.put("pageToken", this.nextPageToken);
+        }
+
         reportRequestArrayNode.add(reportRequestNode);
 
         return mapper.writeValueAsString(rootNode);
@@ -99,6 +105,11 @@ public class GoogleAnalyticsSpecification {
 
     public GoogleAnalyticsSpecification pageSize(int pageSize) {
         this.pageSize = pageSize;
+        return this;
+    }
+
+    public GoogleAnalyticsSpecification setNextPageToken(String nextPageToken) {
+        this.nextPageToken = nextPageToken;
         return this;
     }
 }

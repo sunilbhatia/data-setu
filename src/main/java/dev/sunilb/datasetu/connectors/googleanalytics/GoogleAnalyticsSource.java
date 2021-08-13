@@ -33,6 +33,7 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
     @Override
     public void updatePage(Page page) {
+        this.specification.setNextPageToken(page.getNextPageToken());
         this.page = page;
     }
 
