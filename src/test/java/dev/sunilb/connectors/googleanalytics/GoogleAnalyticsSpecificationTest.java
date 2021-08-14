@@ -1,6 +1,7 @@
 package dev.sunilb.connectors.googleanalytics;
 
 
+import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRequest;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsSpecification;
 import org.testng.annotations.Test;
 
@@ -26,9 +27,8 @@ public class GoogleAnalyticsSpecificationTest {
                         .dimensions("ga:date", "ga:country", "ga:browser", "ga:userType", "ga:city", "ga:source")
                         .pageSize(10);
 
-        String requestBodyJson = gaSpecification.build();
-
-        assertTrue(isJsonEqual(sampleRequestJson, requestBodyJson));
+        GoogleAnalyticsRequest gaRequest = gaSpecification.build();
+        assertTrue(isJsonEqual(sampleRequestJson, gaRequest.getRequestJsonBody()));
 
     }
 
@@ -48,9 +48,8 @@ public class GoogleAnalyticsSpecificationTest {
                         .dimensions("ga:date", "ga:country", "ga:browser", "ga:userType", "ga:city", "ga:source")
                         .pageSize(10);
 
-        String requestBodyJson = gaSpecification.build();
-
-        assertTrue(isJsonEqual(sampleRequestJson, requestBodyJson));
+        GoogleAnalyticsRequest gaRequest = gaSpecification.build();
+        assertTrue(isJsonEqual(sampleRequestJson, gaRequest.getRequestJsonBody()));
 
     }
 
@@ -69,9 +68,8 @@ public class GoogleAnalyticsSpecificationTest {
                         .setNextPageToken("10")
                         .pageSize(10);
 
-        String requestBodyJson = gaSpecification.build();
-
-        assertTrue(isJsonEqual(sampleRequestJson, requestBodyJson));
+        GoogleAnalyticsRequest gaRequest = gaSpecification.build();
+        assertTrue(isJsonEqual(sampleRequestJson, gaRequest.getRequestJsonBody()));
 
     }
 
@@ -93,19 +91,23 @@ public class GoogleAnalyticsSpecificationTest {
                         .dimensions("ga:date")
                         .pageSize(10);
 
-        String requestBodyJsonForPageOne = gaSpecification.build();
+        GoogleAnalyticsRequest gaRequest = gaSpecification.build();
+        String requestBodyJsonForPageOne = gaRequest.getRequestJsonBody();
         assertTrue(isJsonEqual(sampleRequestJsonForPageOne, requestBodyJsonForPageOne));
 
         gaSpecification.setNextPageToken("10");
-        String requestBodyJsonForPageTwo = gaSpecification.build();
+        gaRequest = gaSpecification.build();
+        String requestBodyJsonForPageTwo = gaRequest.getRequestJsonBody();
         assertTrue(isJsonEqual(sampleRequestJsonForPageTwo, requestBodyJsonForPageTwo));
 
         gaSpecification.setNextPageToken("20");
-        String requestBodyJsonForPageThree = gaSpecification.build();
+        gaRequest = gaSpecification.build();
+        String requestBodyJsonForPageThree = gaRequest.getRequestJsonBody();
         assertTrue(isJsonEqual(sampleRequestJsonForPageThree, requestBodyJsonForPageThree));
 
         gaSpecification.setNextPageToken("30");
-        String requestBodyJsonForPageLast = gaSpecification.build();
+        gaRequest = gaSpecification.build();
+        String requestBodyJsonForPageLast = gaRequest.getRequestJsonBody();
         assertTrue(isJsonEqual(sampleRequestJsonForPageLast, requestBodyJsonForPageLast));
 
     }

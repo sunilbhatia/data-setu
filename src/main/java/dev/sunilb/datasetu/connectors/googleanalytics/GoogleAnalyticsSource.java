@@ -1,5 +1,6 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.connectors.DataSetuSource;
 
@@ -39,6 +40,15 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
     @Override
     public String fetch() {
+        specification.setNextPageToken(page.getNextPageToken());
+        try {
+            GoogleAnalyticsRequest gaRequest = specification.build();
+            String jsonRequestBody = gaRequest.getRequestJsonBody();
+//            String requestURL = gaRequest.getRequestURL();
+//            String headers
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return new String();
     }
 }

@@ -11,11 +11,11 @@ import java.util.*;
 
 public class GoogleAnalyticsSpecification {
 
-    private Map<String, String> params;
+    private final Map<String, String> params;
     private String viewId;
-    private List<String> metrics;
-    private List<String> dimensions;
-    private List<DateRange> dateRanges;
+    private final List<String> metrics;
+    private final List<String> dimensions;
+    private final List<DateRange> dateRanges;
     private int pageSize;
     private String nextPageToken;
 
@@ -59,7 +59,7 @@ public class GoogleAnalyticsSpecification {
         return this;
     }
 
-    public String build() throws JsonProcessingException {
+    public GoogleAnalyticsRequest build() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
@@ -100,7 +100,10 @@ public class GoogleAnalyticsSpecification {
 
         reportRequestArrayNode.add(reportRequestNode);
 
-        return mapper.writeValueAsString(rootNode);
+        String gaRequestJsonBody = mapper.writeValueAsString(rootNode);
+        GoogleAnalyticsRequest gaRequest = new GoogleAnalyticsRequest(gaRequestJsonBody);
+
+        return gaRequest;
     }
 
     public GoogleAnalyticsSpecification pageSize(int pageSize) {
