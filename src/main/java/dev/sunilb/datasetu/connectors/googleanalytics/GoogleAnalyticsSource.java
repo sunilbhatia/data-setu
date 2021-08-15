@@ -40,7 +40,7 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
     @Override
     public String fetch() {
-        specification.setNextPageToken(page.getNextPageToken());
+        this.updatePage(this.page);
         try {
             GoogleAnalyticsRequest gaRequest = specification.build();
             String jsonRequestBody = gaRequest.getRequestJsonBody();

@@ -18,6 +18,8 @@ public class GoogleAnalyticsSpecification {
     private final List<DateRange> dateRanges;
     private int pageSize;
     private String nextPageToken;
+    private GoogleAuthentication googleAuthentication;
+    private final HashMap<String, String> headers;
 
     private GoogleAnalyticsSpecification() {
         this.params = new HashMap<>();
@@ -26,6 +28,7 @@ public class GoogleAnalyticsSpecification {
         this.dateRanges = new ArrayList<>();
         this.pageSize = 5; //TODO: Find the default page size and set it to that.
         this.nextPageToken = "";
+        this.headers = new HashMap<>();
     }
 
     public static GoogleAnalyticsSpecification Builder() {
@@ -59,7 +62,37 @@ public class GoogleAnalyticsSpecification {
         return this;
     }
 
+    public GoogleAnalyticsSpecification withAuthentication(GoogleAuthentication googleAuthentication) {
+        this.googleAuthentication = googleAuthentication;
+        return this;
+    }
+
     public GoogleAnalyticsRequest build() throws JsonProcessingException {
+        String gaRequestJsonBody = getGARequestJsonBody();
+        String gaAPIURL = getGAAPIURLPath();
+        Map<String, String> headers = getGAHeaders();
+
+        GoogleAnalyticsRequest gaRequest = new GoogleAnalyticsRequest(gaRequestJsonBody, gaAPIURL, headers);
+
+        //TODO: Raise exception if all mandatory initializations have not been done
+
+        return gaRequest;
+    }
+
+    private Map<String, String> getGAHeaders() {
+        return (Map<String, String>) this.headers.clone();
+    }
+
+    private String getGAAPIURLPath() {
+
+        String accessToken = "";
+
+        if (this.googleAuthentication != null) accessToken = this.googleAuthentication.getAccessToken();
+
+        return "https://analyticsreporting.googleapis.com/v4/reports:batchGet?access_token" + accessToken;
+    }
+
+    private String getGARequestJsonBody() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode rootNode = mapper.createObjectNode();
 
@@ -69,7 +102,7 @@ public class GoogleAnalyticsSpecification {
 
         ArrayNode reportDateRanges = reportRequestNode.putArray("dateRanges");
         ObjectNode reportDateRangeNode = null;
-        for(DateRange dateRange: dateRanges) {
+        for (DateRange dateRange : dateRanges) {
             reportDateRangeNode = reportDateRanges.addObject();
             reportDateRangeNode.put("startDate", dateRange.getStartDate());
             reportDateRangeNode.put("endDate", dateRange.getEndDate());
@@ -78,7 +111,7 @@ public class GoogleAnalyticsSpecification {
         ArrayNode metricsNode = reportRequestNode.putArray("metrics");
         ObjectNode metricsObject = null;
 
-        for(String metric: metrics) {
+        for (String metric : metrics) {
             metricsObject = metricsNode.addObject();
             metricsObject.put("expression", metric);
         }
@@ -87,23 +120,21 @@ public class GoogleAnalyticsSpecification {
         ArrayNode dimensionsNode = reportRequestNode.putArray("dimensions");
         ObjectNode dimensionsObject = null;
 
-        for(String dimension: dimensions) {
+        for (String dimension : dimensions) {
             dimensionsObject = dimensionsNode.addObject();
             dimensionsObject.put("name", dimension);
         }
 
         reportRequestNode.put("pageSize", this.pageSize);
 
-        if(!this.nextPageToken.isEmpty()) {
+        if (!this.nextPageToken.isEmpty()) {
             reportRequestNode.put("pageToken", this.nextPageToken);
         }
 
         reportRequestArrayNode.add(reportRequestNode);
 
         String gaRequestJsonBody = mapper.writeValueAsString(rootNode);
-        GoogleAnalyticsRequest gaRequest = new GoogleAnalyticsRequest(gaRequestJsonBody);
-
-        return gaRequest;
+        return gaRequestJsonBody;
     }
 
     public GoogleAnalyticsSpecification pageSize(int pageSize) {
