@@ -76,6 +76,10 @@ public class GoogleAnalyticsSpecification {
         return gaRequest;
     }
 
+    public void updateGoogleAuthentication(GoogleAuthentication gaAuthentication) {
+        this.googleAuthentication = gaAuthentication;
+    }
+
     private Map<String, String> getGAHeaders() {
         return (Map<String, String>) this.headers.clone();
     }

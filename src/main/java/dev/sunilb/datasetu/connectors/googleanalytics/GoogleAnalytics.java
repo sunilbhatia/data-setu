@@ -51,4 +51,8 @@ public class GoogleAnalytics {
         if (this.page == null) return true; // should return true if the first cursor has not been fetched
         return this.page.hasNext();
     }
+
+    public String renewAuthToken(String clientId, String clientSecret, String gaRefreshToken) {
+        return gaSource.renewAuthToken(clientId, clientSecret, gaRefreshToken);
+    }
 }

@@ -1,5 +1,7 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
+import dev.sunilb.datasetu.exceptions.DataSetuAuthException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,16 +10,10 @@ import java.net.http.HttpResponse;
 import java.util.Map;
 
 public class GoogleAnalyticsService {
-    private GoogleAnalyticsRequest gaRequest;
 
-    public GoogleAnalyticsService(GoogleAnalyticsRequest gaRequest) {
-        this.gaRequest = gaRequest;
-    }
-
-    public String executeAndGetResponse() {
+    public static String executeAndGetData(GoogleAnalyticsRequest gaRequest) throws DataSetuAuthException {
 
         final String jsonBody = gaRequest.getRequestJsonBody();
-        System.out.println(jsonBody);
         final String apiURL = gaRequest.getGaAPIURL();
         final Map<String, String> headers = gaRequest.getHeaders();
 
@@ -37,6 +33,44 @@ public class GoogleAnalyticsService {
             e.printStackTrace();
         }
 
+        if(response.statusCode() != 200) {
+            if(response.statusCode() == 401 ||  response.statusCode() == 403) {
+                throw new DataSetuAuthException("Google Auth Exception");
+            }
+        }
+
         return response.body();
+    }
+
+    public static String executeAndGetNewAuthToken(GoogleAnalyticsRequest gaRefreshTokenRequest) {
+
+        final String jsonBody = gaRefreshTokenRequest.getRequestJsonBody();
+        final String apiURL = gaRefreshTokenRequest.getGaAPIURL();
+        final Map<String, String> headers = gaRefreshTokenRequest.getHeaders();
+
+        HttpClient client = HttpClient.newHttpClient();
+
+        final HttpRequest.Builder builder = HttpRequest.newBuilder(URI.create(apiURL))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody));
+        headers.forEach(builder::header);
+        final HttpRequest request = builder.build();
+
+        HttpResponse<String> response = null;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(response.statusCode() != 200) {
+            if(response.statusCode() == 401 ||  response.statusCode() == 403) {
+                throw new DataSetuAuthException("Google Auth Exception");
+            }
+        }
+
+        return response.body();
+
     }
 }

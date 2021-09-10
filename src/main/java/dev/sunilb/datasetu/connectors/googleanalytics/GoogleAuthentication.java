@@ -7,10 +7,6 @@ public class GoogleAuthentication {
         this.accessToken = accessToken;
     }
 
-    public String getRefreshToken() {
-        return null;
-    }
-
     public String getAccessToken() {
         return accessToken;
     }
