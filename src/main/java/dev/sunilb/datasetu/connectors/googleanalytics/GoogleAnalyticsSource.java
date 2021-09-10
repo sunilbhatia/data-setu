@@ -24,6 +24,9 @@ public class GoogleAnalyticsSource implements DataSetuSource {
     }
 
     public GoogleAnalyticsSource build() {
+        if(this.page == null) {
+            this.page = new Page(10);
+        }
         return this;
     }
 
@@ -41,14 +44,16 @@ public class GoogleAnalyticsSource implements DataSetuSource {
     @Override
     public String fetch() {
         this.updatePage(this.page);
+        GoogleAnalyticsRequest gaRequest = null;
+        String response = "";
         try {
-            GoogleAnalyticsRequest gaRequest = specification.build();
-            String jsonRequestBody = gaRequest.getRequestJsonBody();
-//            String requestURL = gaRequest.getRequestURL();
-//            String headers
+            gaRequest = specification.build();
+            GoogleAnalyticsService gaService = new GoogleAnalyticsService(gaRequest);
+            response = gaService.executeAndGetResponse();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return new String();
+
+        return response;
     }
 }

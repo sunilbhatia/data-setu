@@ -1,7 +1,6 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -11,7 +10,6 @@ import java.util.*;
 
 public class GoogleAnalyticsSpecification {
 
-    private final Map<String, String> params;
     private String viewId;
     private final List<String> metrics;
     private final List<String> dimensions;
@@ -22,22 +20,21 @@ public class GoogleAnalyticsSpecification {
     private final HashMap<String, String> headers;
 
     private GoogleAnalyticsSpecification() {
-        this.params = new HashMap<>();
         this.metrics = new ArrayList<>();
         this.dimensions = new ArrayList<>();
         this.dateRanges = new ArrayList<>();
         this.pageSize = 5; //TODO: Find the default page size and set it to that.
         this.nextPageToken = "";
         this.headers = new HashMap<>();
+        initializeDefaultHeaders();
+    }
+
+    private void initializeDefaultHeaders() {
+        this.headers.put("Content-Type", "application/json");
     }
 
     public static GoogleAnalyticsSpecification Builder() {
         return new GoogleAnalyticsSpecification();
-    }
-
-    public GoogleAnalyticsSpecification params(String key, String value) {
-        this.params.put(key, value);
-        return this;
     }
 
     public GoogleAnalyticsSpecification forView(String viewId) {
@@ -89,7 +86,7 @@ public class GoogleAnalyticsSpecification {
 
         if (this.googleAuthentication != null) accessToken = this.googleAuthentication.getAccessToken();
 
-        return "https://analyticsreporting.googleapis.com/v4/reports:batchGet?access_token" + accessToken;
+        return "https://analyticsreporting.googleapis.com/v4/reports:batchGet?access_token=" + accessToken;
     }
 
     private String getGARequestJsonBody() throws JsonProcessingException {

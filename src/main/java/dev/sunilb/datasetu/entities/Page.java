@@ -6,8 +6,11 @@ public class Page {
     final private String nextPageToken;
 
     public Page() {
-        rowCount = 0;
-        nextPageToken = "";
+        this(0, "");
+    }
+
+    public Page(int rowCount) {
+        this(rowCount, "");
     }
 
     public Page(int rowCount, String nextPageToken) {
