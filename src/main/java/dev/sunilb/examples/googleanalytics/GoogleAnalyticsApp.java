@@ -21,6 +21,7 @@ public class GoogleAnalyticsApp {
 
         GoogleAnalyticsApp.basicIntegrationTest();
         GoogleAnalyticsApp.basicIntegrationAuthExpiryTest();
+        GoogleAnalyticsApp.basicIntegrationAuthExpiryWithPaginationTest();
     }
 
     private static void basicIntegrationTest() {
@@ -119,6 +120,66 @@ public class GoogleAnalyticsApp {
 
         String records = at.render();
         System.out.println(records);
+    }
+
+    private static void basicIntegrationAuthExpiryWithPaginationTest() {
+        Jedis jedis = new Jedis();
+        String gaAuthToken = jedis.get("ga-token");
+        String gaViewId = jedis.get("ga-viewid");
+        String gaRefreshToken = jedis.get("ga-refresh-token");
+
+        GoogleAuthentication gaAuth = new GoogleAuthentication(gaAuthToken);
+        GoogleAnalyticsSpecification gaSpecification = GoogleAnalyticsSpecification.Builder()
+                .forView(gaViewId)
+                .forDateRange("2021-07-01", "2021-07-31")
+                .dimensions("ga:date")
+                .metrics("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions")
+                .withAuthentication(gaAuth)
+                .pageSize(10);
+
+        GoogleAnalyticsSource gaSource = GoogleAnalyticsSource.Builder()
+                .withAuth(gaAuth)
+                .withSpecification(gaSpecification)
+                .build();
+
+        GoogleAnalytics ga = new GoogleAnalytics(gaSource);
+        Records r = null;
+
+        while(ga.hasNext()) {
+            boolean hasSucceded = false;
+            while (!hasSucceded) {
+                try {
+                    r = ga.getRecords();
+
+                    AsciiTable at = new AsciiTable();
+                    at.addRule();
+                    at.addRow("ga:date", "ga:users", "ga:newUsers", "ga:sessions", "ga:transactions");
+                    at.addRule();
+                    for (Row record : r) {
+                        at.addRow(record.valueOfField("ga:date"),
+                                record.valueOfField("ga:users"),
+                                record.valueOfField("ga:newUsers"),
+                                record.valueOfField("ga:sessions"),
+                                record.valueOfField("ga:transactions")
+                        );
+                    }
+                    at.addRule();
+
+                    String records = at.render();
+                    System.out.println(records);
+
+
+                    hasSucceded = true;
+                } catch (DataSetuAuthException e) {
+                    String clientId = jedis.get("ga-client-id");
+                    String clientSecret = jedis.get("ga-client-secret");
+                    gaAuthToken = ga.renewAuthToken(clientId, clientSecret, gaRefreshToken);
+                    jedis.set("ga-token", gaAuthToken);
+                    gaSpecification.updateGoogleAuthentication(new GoogleAuthentication(gaAuthToken));
+                }
+            }
+        }
+
     }
 
 }
