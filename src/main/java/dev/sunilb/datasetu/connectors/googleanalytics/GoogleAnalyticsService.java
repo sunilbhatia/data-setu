@@ -1,6 +1,7 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
 import dev.sunilb.datasetu.exceptions.DataSetuAuthException;
+import dev.sunilb.datasetu.exceptions.DataSetuException;
 
 import java.io.IOException;
 import java.net.URI;
@@ -33,9 +34,13 @@ public class GoogleAnalyticsService {
             e.printStackTrace();
         }
 
-        if(response.statusCode() != 200) {
-            if(response.statusCode() == 401 ||  response.statusCode() == 403) {
+        if (response.statusCode() != 200) {
+            if (response.statusCode() == 401 || response.statusCode() == 403) {
                 throw new DataSetuAuthException("Google Auth Exception");
+            } else if (response.statusCode() == 400) {
+                throw new DataSetuException("Bad Request. Response from GoogleAnalytics: " + response.body());
+            } else {
+                throw new DataSetuException("Unknown Error response from GoogleAnalytics: " + response.body());
             }
         }
 
@@ -64,8 +69,8 @@ public class GoogleAnalyticsService {
             e.printStackTrace();
         }
 
-        if(response.statusCode() != 200) {
-            if(response.statusCode() == 401 ||  response.statusCode() == 403) {
+        if (response.statusCode() != 200) {
+            if (response.statusCode() == 401 || response.statusCode() == 403) {
                 throw new DataSetuAuthException("Google Auth Exception");
             }
         }

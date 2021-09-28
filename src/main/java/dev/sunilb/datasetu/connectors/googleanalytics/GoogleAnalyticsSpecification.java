@@ -49,13 +49,13 @@ public class GoogleAnalyticsSpecification {
         return this;
     }
 
-    public GoogleAnalyticsSpecification metrics(String... metrics) {
-        Collections.addAll(this.metrics, metrics);
+    public GoogleAnalyticsSpecification metrics(List<String> metrics) {
+        metrics.forEach(s -> this.metrics.add(s.trim()));
         return this;
     }
 
-    public GoogleAnalyticsSpecification dimensions(String... dimensions) {
-        Collections.addAll(this.dimensions, dimensions);
+    public GoogleAnalyticsSpecification dimensions(List<String> dimensions) {
+        dimensions.forEach(s -> this.dimensions.add(s.trim()));
         return this;
     }
 

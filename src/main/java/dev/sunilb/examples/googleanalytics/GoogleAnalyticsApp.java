@@ -10,7 +10,15 @@ import dev.sunilb.datasetu.entities.Row;
 import dev.sunilb.datasetu.exceptions.DataSetuAuthException;
 import redis.clients.jedis.Jedis;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class GoogleAnalyticsApp {
+    public static void main2(String[] args) {
+        List<String> data = Arrays.asList("ga:users, ga:newUsers, ga:sessions, ga:bounces, ga:sessionDuration, ga:transactions, ga:transactionRevenue, ga:revenuePerTransaction, ga:percentNewSession".split(","));
+        System.out.println(data.size());
+    }
+
     public static void main(String[] args) {
         System.out.println("Please populate REDIS with these keys");
         System.out.println("1) \"ga-token\"\n" +
@@ -20,8 +28,9 @@ public class GoogleAnalyticsApp {
                 "5) \"ga-viewid\"");
 
         GoogleAnalyticsApp.basicIntegrationTest();
-        GoogleAnalyticsApp.basicIntegrationAuthExpiryTest();
-        GoogleAnalyticsApp.basicIntegrationAuthExpiryWithPaginationTest();
+//        GoogleAnalyticsApp.basicIntegrationAuthExpiryTest();
+//        GoogleAnalyticsApp.basicIntegrationAuthExpiryTest();
+//        GoogleAnalyticsApp.basicIntegrationAuthExpiryWithPaginationTest();
     }
 
     private static void basicIntegrationTest() {
@@ -32,9 +41,9 @@ public class GoogleAnalyticsApp {
         GoogleAuthentication gaAuth = new GoogleAuthentication(gaAuthToken);
         GoogleAnalyticsSpecification gaSpecification = GoogleAnalyticsSpecification.Builder()
                 .forView(gaViewId)
-                .forDateRange("2021-06-01", "2021-06-30")
-                .dimensions("ga:date")
-                .metrics("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions", "ga:revenuePerTransaction")
+                .forDateRange("2021-01-01", "2021-01-03")
+                .dimensions(Arrays.asList("ga:date"))
+                .metrics(Arrays.asList("ga:users, ga:newUsers, ga:sessions, ga:bounces, ga:sessionDuration, ga:transactions, ga:transactionRevenue, ga:revenuePerTransaction".split(",")))
                 .withAuthentication(gaAuth)
                 .pageSize(100);
 
@@ -45,8 +54,9 @@ public class GoogleAnalyticsApp {
 
         GoogleAnalytics ga = new GoogleAnalytics(gaSource);
         Records r = ga.getRecords();
+        System.out.println(r.count());
 
-        AsciiTable at = new AsciiTable();
+        /*AsciiTable at = new AsciiTable();
         at.addRule();
         at.addRow("ga:date", "ga:users", "ga:newUsers", "ga:sessions", "ga:transactions", "ga:revenuePerTransaction");
         at.addRule();
@@ -62,7 +72,7 @@ public class GoogleAnalyticsApp {
         at.addRule();
 
         String records = at.render();
-        System.out.println(records);
+        System.out.println(records);*/
     }
 
     private static void basicIntegrationAuthExpiryTest() {
@@ -75,8 +85,8 @@ public class GoogleAnalyticsApp {
         GoogleAnalyticsSpecification gaSpecification = GoogleAnalyticsSpecification.Builder()
                 .forView(gaViewId)
                 .forDateRange("2021-07-01", "2021-07-31")
-                .dimensions("ga:date")
-                .metrics("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions")
+                .dimensions(Arrays.asList("ga:date"))
+                .metrics(Arrays.asList("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions"))
                 .withAuthentication(gaAuth)
                 .pageSize(100);
 
@@ -132,8 +142,8 @@ public class GoogleAnalyticsApp {
         GoogleAnalyticsSpecification gaSpecification = GoogleAnalyticsSpecification.Builder()
                 .forView(gaViewId)
                 .forDateRange("2021-07-01", "2021-07-31")
-                .dimensions("ga:date")
-                .metrics("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions")
+                .dimensions(Arrays.asList("ga:date"))
+                .metrics(Arrays.asList("ga:users", "ga:newUsers", "ga:sessions", "ga:transactions"))
                 .withAuthentication(gaAuth)
                 .pageSize(10);
 
