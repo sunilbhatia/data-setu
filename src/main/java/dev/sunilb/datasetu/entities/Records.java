@@ -34,7 +34,6 @@ public class Records implements Iterable<Row> {
     }
 
 
-
     public String getFieldNameAtPosition(int fieldPosition) {
         if (fieldPosition >= fieldList.size()) throw new InvalidFieldException("Invalid Field Position");
         return fieldList.get(fieldPosition);

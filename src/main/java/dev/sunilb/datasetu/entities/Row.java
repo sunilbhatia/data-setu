@@ -23,9 +23,16 @@ public class Row {
 
     @Override
     public String toString() {
-        return "Row{" +
-                "rowData=" + rowData +
-                ", forRecord=" + forRecord +
-                '}';
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < rowData.size(); i++) {
+            sb.append(rowData.get(i));
+            if (i + 1 != rowData.size()) {
+                sb.append(",");
+            }
+        }
+
+        return sb.toString();
+
     }
 }
