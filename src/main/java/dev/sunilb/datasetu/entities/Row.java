@@ -20,4 +20,12 @@ public class Row {
     public String valueOfField(String fieldName) {
         return valueOfField(forRecord.getFieldPositionForGivenName(fieldName));
     }
+
+    @Override
+    public String toString() {
+        return "Row{" +
+                "rowData=" + rowData +
+                ", forRecord=" + forRecord +
+                '}';
+    }
 }
