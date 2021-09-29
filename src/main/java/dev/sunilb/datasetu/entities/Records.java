@@ -76,6 +76,17 @@ public class Records implements Iterable<Row> {
         return fieldList.size();
     }
 
+    public String[] getFields() {
+
+        String fields[] = new String[this.fieldsCount()];
+        
+        for (int i = 0; i < this.fieldsCount(); i++) {
+            fields[i] = this.getFieldNameAtPosition(i);
+        }
+
+        return fields;
+    }
+
     private class RecordsIterator<Row> implements Iterator<Row> {
 
         Records records;

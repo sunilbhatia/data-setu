@@ -49,6 +49,16 @@ public class RecordsFieldTest {
         assertEquals(records.getFieldNameAtPosition(3), "field4");
     }
 
+    @Test
+    public void shouldReturnHeadersForRecords() {
+        String[] fieldList = new String[]{"field1", "field2", "field3"};
+        Records records = new Records(Arrays.asList(fieldList));
+        String [] fields = records.getFields();
+        for (int i = 0; i < fields.length; i++) {
+            assertEquals(fields[i], fieldList[i]);
+        }
+    }
+
 
     @Test(expectedExceptions = InvalidFieldException.class)
     public void shouldThrowInvalidFieldExceptionWhenFieldNameDoesNotExist() {
