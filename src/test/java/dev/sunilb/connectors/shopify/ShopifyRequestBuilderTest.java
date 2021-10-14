@@ -21,7 +21,7 @@ public class ShopifyRequestBuilderTest {
                 .withFields("id name discountCode")
                 .build();
         String requestJson = shopifyRequestBuilder.toString();
-        assertTrue(TestHelpers.isJsonEqual(requestJson, "{\"query\": \"{orders(first:100){edges {node {id name discountCode}}}}\"}"));
+        assertTrue(TestHelpers.isJsonEqual(requestJson, "{\"query\": \"{orders(first:100){pageInfo {hasNextPage, hasPreviousPage} edges {cursor node {id name discountCode}}}}\"}"));
     }
 
     @Test
@@ -35,7 +35,8 @@ public class ShopifyRequestBuilderTest {
                 .withQuery("created_at:>2021-10-13")
                 .build();
         String requestJson = shopifyRequestBuilder.toString();
-        assertTrue(TestHelpers.isJsonEqual(requestJson, "{\"query\": \"{orders(first:100,query:\\\"created_at:>2021-10-13\\\"){edges {node {id name discountCode}}}}\"}"));
+        System.out.println(requestJson);
+        assertTrue(TestHelpers.isJsonEqual(requestJson, "{\"query\": \"{orders(first:100,query:\\\"created_at:>2021-10-13\\\"){pageInfo {hasNextPage, hasPreviousPage} edges {cursor node {id name discountCode}}}}\"}"));
     }
 
     @Test(expectedExceptions = DataSetuException.class)

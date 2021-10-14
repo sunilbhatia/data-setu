@@ -49,7 +49,7 @@ public class ShopifyRequestBuilder {
     }
 
     private String getEdgesNode() {
-        return "{edges {node {" + fields + "}}}";
+        return "{pageInfo {hasNextPage, hasPreviousPage} edges {cursor node {" + fields + "}}}";
     }
 
     private String getArguments() {
