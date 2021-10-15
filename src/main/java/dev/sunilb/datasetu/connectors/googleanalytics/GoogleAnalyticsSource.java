@@ -85,8 +85,6 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
         String new_access_token = jsonNode.get("access_token").asText();
 
-        System.out.println(new_access_token);
-
         return new_access_token;
     }
 
