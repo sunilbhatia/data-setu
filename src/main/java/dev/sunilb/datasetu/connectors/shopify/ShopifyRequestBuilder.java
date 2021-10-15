@@ -24,16 +24,10 @@ public class ShopifyRequestBuilder {
         return this;
     }
 
-    public ShopifyRequestBuilder build() {
+    public String build() {
 
         if (queryRoot == null || scanFrom == null || fields == null)
             throw new DataSetuException("Cannot build Shopify Request Object as mandatory objects are not instantiated");
-
-        return this;
-    }
-
-    @Override
-    public String toString() {
 
         StringBuilder requestObject = new StringBuilder();
         requestObject.append("{");
@@ -46,6 +40,7 @@ public class ShopifyRequestBuilder {
         requestObject.append("}");
 
         return requestObject.toString();
+
     }
 
     private String getEdgesNode() {
