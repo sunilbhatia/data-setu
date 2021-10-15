@@ -52,27 +52,6 @@ public class GoogleAnalyticsSource implements DataSetuSource {
     @Override
     public String renewAuthToken(String clientId, String clientSecret, String gaRefreshToken) {
 
-        //https://stackoverflow.com/questions/56728398/java-11-new-http-client-send-post-requests-with-x-www-form-urlencoded-parameter
-        /*Map<String, String> parameters = new HashMap<>();
-        parameters.put("a", "get_account");
-        parameters.put("account", account);
-
-        String form = parameters.keySet().stream()
-                .map(key -> key + "=" + URLEncoder.encode(parameters.get(key), StandardCharsets.UTF_8))
-                .collect(Collectors.joining("&"));
-
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(this.url))
-                .headers("Content-Type", "application/x-www-form-urlencoded")
-                .POST(BodyPublishers.ofString(form)).build();
-
-        HttpResponse<?> response = client.send(request, BodyHandlers.ofString());
-
-        System.out.println(response.statusCode() + response.body().toString());*/
-
-//        GoogleAnalyticsRequest gaRequest = new GoogleAnalyticsRequest();
-
         Map<String, String> formData = new HashMap<>();
         formData.put("client_id", clientId);
         formData.put("client_secret", clientSecret);
@@ -108,7 +87,6 @@ public class GoogleAnalyticsSource implements DataSetuSource {
 
         System.out.println(new_access_token);
 
-//        this.authentication = new GoogleAuthentication("");
         return new_access_token;
     }
 
