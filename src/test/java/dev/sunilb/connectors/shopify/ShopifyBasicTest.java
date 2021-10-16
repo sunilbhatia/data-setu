@@ -34,10 +34,8 @@ public class ShopifyBasicTest {
     @Test
     public void shouldGetRecordsGivenAShopifyJsonResponseThatHasRecords() {
         Records records = this.saBasic.getRecords();
-        assertEquals(records.fieldsCount(), 2);
-        assertEquals(records.getFieldNameAtPosition(0), "ga:country");
-        assertEquals(records.getFieldNameAtPosition(1), "ga:users");
-        assertEquals(records.count(), 73);
+        assertEquals(records.fieldsCount(), 13);
+        assertEquals(records.count(), 50);
     }
 
 }

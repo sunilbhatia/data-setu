@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRecordsDeserializerResponse;
+import dev.sunilb.datasetu.entities.Records;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdminRecordsDeserializerResponse> {
 
@@ -20,28 +22,24 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     @Override
     public ShopifyAdminRecordsDeserializerResponse deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
-
         String queryRoot = getQueryRoot(rootNode);
         boolean hasNext = hasNext(rootNode, queryRoot);
-        JsonNode edgesArray = rootNode.get("data").get("orders").get("edges");
+        JsonNode edgesArray = rootNode.get("data").get(queryRoot).get("edges");
         String nextPageCursor = getNextPageCursor(edgesArray);
         List<Map<String, Object>> results = processEdgesAndGetResults(edgesArray);
-        System.out.println(results.size());
+        Records records = convertResultsToRecords(results);
+        ShopifyAdminRecordsDeserializerResponse response = new ShopifyAdminRecordsDeserializerResponse(records);
+        return response;
+    }
 
-        String a = rootNode.getNodeType().name();
-        /*String b = rootNode.get("data").getNodeType().name();
-        rootNode.get("data").fields().forEachRemaining(a1 -> {
-            System.out.println(a1.getKey());
-        });
-        JsonNode node = rootNode.get("data").get("orders").get("edges");
-        String c = rootNode.get("data").get("orders").get("edges").getNodeType().name();
-        rootNode.get("data").fields().forEachRemaining(a2 -> {
-            System.out.println("+++ " + a2.getKey());
-        });*/
-//        String d = rootNode.get("data").get("orders").get("fname").getNodeType().name();
-//        String s = rootNode.get("data").get("fname").asText();
-//        System.out.println(rootNode.get("data").asText());
-        return null;
+    private Records convertResultsToRecords(List<Map<String, Object>> results) {
+        Records records = new Records(getFieldsList(results));
+        return records;
+    }
+
+    private List<String> getFieldsList(List<Map<String, Object>> results) {
+        List<String> fieldsList = new ArrayList<>(results.get(0).keySet());
+        return fieldsList;
     }
 
     private String getNextPageCursor(JsonNode edgesArray) {
