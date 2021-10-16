@@ -36,7 +36,7 @@
                   "node": {
                     "id": "gid://shopify/LineItem/l112233",
                     "quantity": 1,
-                    "title": "Some Product Title",
+                    "title": "Some Product Title One",
                     "sku": "SKU112299",
                     "variantTitle": ""
                   }
@@ -45,7 +45,7 @@
                   "node": {
                     "id": "gid://shopify/LineItem/l112233",
                     "quantity": 1,
-                    "title": "Some Product Title",
+                    "title": "Some Product Title Two",
                     "sku": "SKU112299",
                     "variantTitle": ""
                   }

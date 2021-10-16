@@ -17,8 +17,9 @@ public class ShopifyAdmin {
     }
 
     private ShopifyAdminRecordsDeserializerResponse getShopifyAdminResponse() throws JsonProcessingException {
-        String json = "{\"data\": {\"orders\": {\"fname\": \"Sunil\", \"lname\": \"Bhatia\"}}}"; //shopifySource.fetch();
-        System.out.println(json);
+//        String json = "{\"data\": {\"orders\": {\"fname\": \"Sunil\", \"lname\": \"Bhatia\"}}}"; //shopifySource.fetch();
+        String json =  shopifySource.fetch();
+//        System.out.println(json);
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
