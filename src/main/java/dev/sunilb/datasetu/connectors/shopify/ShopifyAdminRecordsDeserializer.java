@@ -5,14 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRecordsDeserializerResponse;
 import dev.sunilb.datasetu.entities.Records;
-import dev.sunilb.datasetu.entities.Row;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdminRecordsDeserializerResponse> {
 
@@ -57,7 +53,23 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     }
 
     private String mergeDataEdges(List<Map<String, Object>> edges) {
-        return "";
+
+        StringBuffer fieldBuffer = new StringBuffer();
+        fieldBuffer.append("~~~");
+        edges.forEach(mapOfData -> {
+            StringBuffer objectData = new StringBuffer();
+            objectData.append("^^^");
+            mapOfData.forEach((key, value) -> {
+                objectData.append(key);
+                objectData.append("=");
+                objectData.append((String)value);
+                objectData.append("^^^");
+            });
+            fieldBuffer.append(objectData);
+            fieldBuffer.append("~~~");
+        });
+
+        return fieldBuffer.toString();
     }
 
     private List<String> getFieldsList(List<Map<String, Object>> results) {
