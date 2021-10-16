@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRecordsDeserializerResponse;
 import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.entities.Row;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -33,8 +34,30 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     }
 
     private Records convertResultsToRecords(List<Map<String, Object>> results) {
-        Records records = new Records(getFieldsList(results));
+        List<String> fieldList = getFieldsList(results);
+        Records records = new Records(fieldList);
+
+        results.forEach(resultMap -> {
+            List<String> dataList = new ArrayList<>();
+            fieldList.forEach(fieldName -> {
+                String data = null;
+                if(fieldName.endsWith(".edges")) {
+                    data = mergeDataEdges((List<Map<String, Object>>) resultMap.get(fieldName));
+                } else {
+                    data = (String) resultMap.get(fieldName);
+                }
+                dataList.add(data);
+            });
+
+            String[] rowData = dataList.toArray(new String[0]);
+            records.insert(rowData);
+        });
+
         return records;
+    }
+
+    private String mergeDataEdges(List<Map<String, Object>> edges) {
+        return "";
     }
 
     private List<String> getFieldsList(List<Map<String, Object>> results) {
