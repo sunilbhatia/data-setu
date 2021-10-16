@@ -1,0 +1,423 @@
+{
+  "data": {
+    "customers": {
+      "pageInfo": {
+        "hasNextPage": true,
+        "hasPreviousPage": false
+      },
+      "edges": [
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": null,
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        },
+        {
+          "cursor": "===someCursor",
+          "node": {
+            "id": "some_customer_id",
+            "email": "some@domain.com",
+            "createdAt": "2020-01-01T10:22:26Z",
+            "firstName": "FirstName",
+            "lastName": "LastName"
+          }
+        }
+      ]
+    }
+  },
+  "extensions": {
+    "cost": {
+      "requestedQueryCost": 42,
+      "actualQueryCost": 42,
+      "throttleStatus": {
+        "maximumAvailable": 1000.0,
+        "currentlyAvailable": 958,
+        "restoreRate": 50.0
+      }
+    }
+  }
+}

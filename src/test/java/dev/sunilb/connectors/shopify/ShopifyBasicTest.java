@@ -15,16 +15,24 @@ import static org.testng.Assert.assertEquals;
 
 public class ShopifyBasicTest {
 
-    ShopifyAdmin saBasic;
+    ShopifyAdmin saOrderCustomer;
+    ShopifyAdmin saCustomer;
 
     @BeforeClass
     public void setup() {
 
+//        String jsonBasic = getResourceStreamAsString("shopify/responses/order-customer/basic-customer.json");
+
         try {
-            String jsonBasic = getResourceStreamAsString("shopify/responses/order-customer/basic-order-customer.json");
-            ShopifySource shopifyBasicSource = mock(ShopifySource.class);
-            when(shopifyBasicSource.fetch()).thenReturn(jsonBasic);
-            this.saBasic = new ShopifyAdmin(shopifyBasicSource);
+            String jsonOrderCustomer = getResourceStreamAsString("shopify/responses/order-customer/basic-order-customer.json");
+            ShopifySource shopifyOrderCustomerSource = mock(ShopifySource.class);
+            when(shopifyOrderCustomerSource.fetch()).thenReturn(jsonOrderCustomer);
+            this.saOrderCustomer = new ShopifyAdmin(shopifyOrderCustomerSource);
+
+            String jsonCustomer = getResourceStreamAsString("shopify/responses/order-customer/basic-customer.json");
+            ShopifySource shopifyCustomerSource = mock(ShopifySource.class);
+            when(shopifyCustomerSource.fetch()).thenReturn(jsonCustomer);
+            this.saCustomer = new ShopifyAdmin(shopifyCustomerSource);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,9 +41,13 @@ public class ShopifyBasicTest {
 
     @Test
     public void shouldGetRecordsGivenAShopifyJsonResponseThatHasRecords() {
-        Records records = this.saBasic.getRecords();
-        assertEquals(records.fieldsCount(), 13);
-        assertEquals(records.count(), 50);
+        Records orderCustomer = this.saOrderCustomer.getRecords();
+        assertEquals(orderCustomer.fieldsCount(), 13);
+        assertEquals(orderCustomer.count(), 50);
+
+        Records customer = this.saCustomer.getRecords();
+        assertEquals(customer.fieldsCount(), 5);
+        assertEquals(customer.count(), 40);
     }
 
 }

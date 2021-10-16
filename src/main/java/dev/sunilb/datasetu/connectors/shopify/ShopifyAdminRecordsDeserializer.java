@@ -155,7 +155,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     }
 
     private boolean hasNext(JsonNode node, String queryRoot) {
-        JsonNode pageInfoNode = node.get("data").get("orders").get("pageInfo");
+        JsonNode pageInfoNode = node.get("data").get(queryRoot).get("pageInfo");
         if (pageInfoNode == null) return false;
         return pageInfoNode.get("hasNextPage").asBoolean();
     }
