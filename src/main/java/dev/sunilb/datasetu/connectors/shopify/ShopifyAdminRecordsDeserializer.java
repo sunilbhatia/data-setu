@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
         String nextPageCursor = getNextPageCursor(edgesArray);
         List<Map<String, Object>> results = processEdgesAndGetResults(edgesArray);
         Records records = convertResultsToRecords(results);
-        ShopifyAdminRecordsDeserializerResponse response = new ShopifyAdminRecordsDeserializerResponse(records);
+        Page page =  new Page(0, nextPageCursor);
+        ShopifyAdminRecordsDeserializerResponse response = new ShopifyAdminRecordsDeserializerResponse(records, page);
         return response;
     }
 

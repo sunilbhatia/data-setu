@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import dev.sunilb.datasetu.connectors.DataSetuSource;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRecordsDeserializer;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRecordsDeserializerResponse;
+import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 
 public class ShopifyAdmin {
 
     private final DataSetuSource shopifySource;
+    private Page page;
 
     public ShopifyAdmin(ShopifySource shopifySource) {
         this.shopifySource = shopifySource;
@@ -38,8 +40,8 @@ public class ShopifyAdmin {
             shopifyResponse = getShopifyAdminResponse();
             records = shopifyResponse.getRecords();
 
-//            this.page = gaResponse.getPage();
-//            this.gaSource.updatePage(this.page);
+            this.page = shopifyResponse.getPage();
+            this.shopifySource.updatePage(this.page);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -47,5 +49,10 @@ public class ShopifyAdmin {
         }
 
         return records;
+    }
+
+    public boolean hasNext() {
+        if (this.page == null) return true; // should return true if the first cursor has not been fetched
+        return this.page.hasNext();
     }
 }
