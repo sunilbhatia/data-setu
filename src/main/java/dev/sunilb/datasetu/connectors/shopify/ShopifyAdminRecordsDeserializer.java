@@ -43,6 +43,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
                     data = mergeDataEdges((List<Map<String, Object>>) resultMap.get(fieldName));
                 } else {
                     data = (String) resultMap.get(fieldName);
+                    data = (data == null) ? "" : data;
                 }
                 dataList.add(data);
             });
@@ -75,8 +76,27 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     }
 
     private List<String> getFieldsList(List<Map<String, Object>> results) {
-        List<String> fieldsList = new ArrayList<>(results.get(0).keySet());
+
+        Set<String> maxFieldSet = getMaxFieldList(results);
+
+        List<String> fieldsList = new ArrayList<>(maxFieldSet);
         return fieldsList;
+    }
+
+    // This is needed as the shape of all rows may be different
+    // hence we need the max set for building the table
+    private Set<String> getMaxFieldList(List<Map<String, Object>> results) {
+        Set<String> maxFieldSet = null;
+        int maxFieldLength = 0;
+        int mapSize = results.size();
+        for (int i = 0; i < mapSize; i++) {
+            int currentKeySize = results.get(i).keySet().size();
+            if(currentKeySize > maxFieldLength) {
+                maxFieldLength = currentKeySize;
+                maxFieldSet = results.get(i).keySet();
+            }
+        }
+        return maxFieldSet;
     }
 
     private String getNextPageCursor(JsonNode edgesArray) {
@@ -97,7 +117,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
         int arrayLength = edgesArray.size();
         List<Map<String, Object>> results = new ArrayList<>();
         for (int index = 0; index < arrayLength; index++) {
-            JsonNode edgeObject = edgesArray.get(index).get("node");
+            JsonNode edgeObject = getEdgeNodeOrFirstObject(edgesArray, index);
             Iterator<Map.Entry<String, JsonNode>> fieldIterator = edgeObject.fields();
             Map<String, Object> result = new HashMap<>();
             while (fieldIterator.hasNext()) {
@@ -108,7 +128,13 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
                 if (isString(value)) {
                     result.put(fieldName, value.asText());
                 } else if (isArray(value)) {
-                    processEdgesAndGetResults(value);
+                    List<Map<String, Object>> resultArray = processEdgesAndGetResults(value);
+                    resultArray.forEach(stringObjectMap -> {
+                        Set<String> mapKeySet  = stringObjectMap.keySet();
+                        mapKeySet.forEach(key -> {
+                            result.put(fieldName + "." + key, stringObjectMap.get(key));
+                        });
+                    });
                 } else if (isObject(value)) {
                     Map<String, Object> valueMap = getObjectDetails(value);
                     valueMap.forEach((objKey, objValue) -> {
@@ -123,6 +149,20 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
 
         return results;
 
+    }
+
+    private JsonNode getEdgeNodeOrFirstObject(JsonNode edgesArray, int index) {
+
+        JsonNode node = edgesArray.get(index).get("node");
+
+        if(node == null) {
+            // due to refunds[] that does not have 'node' but 'totalRefundSet' hence if node is not there
+            // then get the first key, which in our case is 'totalRefundSet
+            String firstKeyInObject = edgesArray.get(index).fields().next().getKey();
+            node = edgesArray.get(index).get(firstKeyInObject);
+        }
+
+        return node;
     }
 
     private boolean isArray(JsonNode value) {

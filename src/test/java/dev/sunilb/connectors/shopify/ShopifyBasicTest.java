@@ -15,8 +15,9 @@ import static org.testng.Assert.assertEquals;
 
 public class ShopifyBasicTest {
 
-    ShopifyAdmin saOrderCustomer;
-    ShopifyAdmin saCustomer;
+    private ShopifyAdmin saOrderCustomer;
+    private ShopifyAdmin saCustomer;
+    private ShopifyAdmin saOrderCustomerWithRefunds;
 
     @BeforeClass
     public void setup() {
@@ -28,6 +29,11 @@ public class ShopifyBasicTest {
             ShopifySource shopifyOrderCustomerSource = mock(ShopifySource.class);
             when(shopifyOrderCustomerSource.fetch()).thenReturn(jsonOrderCustomer);
             this.saOrderCustomer = new ShopifyAdmin(shopifyOrderCustomerSource);
+
+            String jsonOrderCustomerWithRefunds = getResourceStreamAsString("shopify/responses/order-customer/basic-order-customer-with-refund-array.json");
+            ShopifySource shopifyOrderCustomerSourceWithRefunds = mock(ShopifySource.class);
+            when(shopifyOrderCustomerSourceWithRefunds.fetch()).thenReturn(jsonOrderCustomerWithRefunds);
+            this.saOrderCustomerWithRefunds = new ShopifyAdmin(shopifyOrderCustomerSourceWithRefunds);
 
             String jsonCustomer = getResourceStreamAsString("shopify/responses/order-customer/basic-customer.json");
             ShopifySource shopifyCustomerSource = mock(ShopifySource.class);
@@ -44,6 +50,12 @@ public class ShopifyBasicTest {
         Records orderCustomer = this.saOrderCustomer.getRecords();
         assertEquals(orderCustomer.fieldsCount(), 13);
         assertEquals(orderCustomer.count(), 50);
+
+
+        Records orderCustomerWithRefunds = this.saOrderCustomerWithRefunds.getRecords();
+        assertEquals(orderCustomerWithRefunds.fieldsCount(), 15);
+        assertEquals(orderCustomerWithRefunds.count(), 50);
+
 
         Records customer = this.saCustomer.getRecords();
         assertEquals(customer.fieldsCount(), 5);

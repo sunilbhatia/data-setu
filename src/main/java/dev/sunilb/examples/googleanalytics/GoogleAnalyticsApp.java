@@ -14,10 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GoogleAnalyticsApp {
-    public static void main2(String[] args) {
-        List<String> data = Arrays.asList("ga:users, ga:newUsers, ga:sessions, ga:bounces, ga:sessionDuration, ga:transactions, ga:transactionRevenue, ga:revenuePerTransaction, ga:percentNewSession".split(","));
-        System.out.println(data.size());
-    }
 
     public static void main(String[] args) {
         System.out.println("Please populate REDIS with these keys");
