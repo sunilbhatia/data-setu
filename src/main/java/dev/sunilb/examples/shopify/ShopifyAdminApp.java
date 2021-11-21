@@ -26,8 +26,7 @@ public class ShopifyAdminApp {
                 .withQueryRoot("orders")
                 .first(100)
                 .withFields("id name discountCode")
-                .withQuery("created_at:>2021-10-13")
-                .build();
+                .withQuery("created_at:>2020-01-01");
 
         ShopifySource sSource = ShopifySource.Builder()
                 .withAuthToken(shopifyAccessToken)
@@ -40,24 +39,6 @@ public class ShopifyAdminApp {
         for (int i = 0; i < r.count(); i++) {
             System.out.println(r.getRow(i));
         }
-
-        /*AsciiTable at = new AsciiTable();
-        at.addRule();
-        at.addRow("ga:date", "ga:users", "ga:newUsers", "ga:sessions", "ga:transactions", "ga:revenuePerTransaction");
-        at.addRule();
-        for (Row record : r) {
-            at.addRow(record.valueOfField("ga:date"),
-                    record.valueOfField("ga:users"),
-                    record.valueOfField("ga:newUsers"),
-                    record.valueOfField("ga:sessions"),
-                    record.valueOfField("ga:transactions"),
-                    record.valueOfField("ga:revenuePerTransaction")
-            );
-        }
-        at.addRule();
-
-        String records = at.render();
-        System.out.println(records);*/
     }
 
 

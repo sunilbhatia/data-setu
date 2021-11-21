@@ -1,6 +1,10 @@
 package dev.sunilb.datasetu.connectors.shopify;
 
+import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRequest;
 import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsSpecification;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShopifyAdminSpecification {
     private String queryRoot;
@@ -22,8 +26,21 @@ public class ShopifyAdminSpecification {
     }
 
 
-    public ShopifyAdminSpecification build() {
-        return new ShopifyAdminSpecification();
+    public String build() {
+        String shopifyAdminRequestBody = getJsonRequestBody();
+        return shopifyAdminRequestBody;
+    }
+
+    private String getJsonRequestBody() {
+
+        String jsonRequestBody = ShopifyRequestBuilder.Builder()
+                .first(this.rows)
+                .withQueryRoot(this.queryRoot)
+                .withFields(this.fieldNames)
+                .withQuery(this.query)
+                .build();
+
+        return jsonRequestBody;
     }
 
     public ShopifyAdminSpecification first(long rows) {
@@ -44,5 +61,9 @@ public class ShopifyAdminSpecification {
     public ShopifyAdminSpecification forStore(String storeId) {
         this.storeId = storeId;
         return this;
+    }
+
+    public String getStoreId() {
+        return this.storeId;
     }
 }

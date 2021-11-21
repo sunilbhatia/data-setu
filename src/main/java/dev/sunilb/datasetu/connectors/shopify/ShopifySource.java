@@ -1,8 +1,10 @@
 package dev.sunilb.datasetu.connectors.shopify;
 
 import dev.sunilb.datasetu.connectors.DataSetuSource;
-import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsSource;
 import dev.sunilb.datasetu.entities.Page;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShopifySource implements DataSetuSource {
 
@@ -18,7 +20,30 @@ public class ShopifySource implements DataSetuSource {
     }
 
     public String fetch() {
-        return null;
+        ShopifyAdminRequest shopifyRequest =  getShopifyAdminRequest();
+        String shopifyAdminJson = ShopifyAdminService.executeAndGetData(shopifyRequest);
+        return shopifyAdminJson;
+    }
+
+    private ShopifyAdminRequest getShopifyAdminRequest() {
+        String shopifyAdminRequestBody = shopifyAdminSpecification.build();
+        String apiPath = getShopifyAdminAPI();
+        Map<String, String> headers = getShopifyAdminHeaders();
+
+        ShopifyAdminRequest sAdminRequest = new ShopifyAdminRequest(shopifyAdminRequestBody, apiPath, headers);
+        return sAdminRequest;
+    }
+
+    private Map<String, String> getShopifyAdminHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        headers.put("X-Shopify-Access-Token", this.shopifyAccessToken);
+        return headers;
+    }
+
+    private String getShopifyAdminAPI() {
+        String apiURL = "https://" + this.shopifyAdminSpecification.getStoreId() + ".myshopify.com/admin/api/2021-07/graphql.json";
+        return apiURL;
     }
 
     @Override

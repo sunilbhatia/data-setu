@@ -23,9 +23,7 @@ public class ShopifyAdmin {
         SimpleModule module = new SimpleModule();
         module.addDeserializer(ShopifyAdminRecordsDeserializerResponse.class, new ShopifyAdminRecordsDeserializer(ShopifyAdminRecordsDeserializerResponse.class));
         mapper.registerModule(module);
-        ShopifyAdminRecordsDeserializerResponse d = mapper.readValue(json, ShopifyAdminRecordsDeserializerResponse.class);
-
-        return d;
+        return mapper.readValue(json, ShopifyAdminRecordsDeserializerResponse.class);
     }
 
     public Records getRecords() {
