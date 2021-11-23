@@ -9,6 +9,7 @@ public class ShopifyRequestBuilder {
     private long scanRows;
     private String fields;
     private String queryString;
+    private String nextPageCursor;
 
     private ShopifyRequestBuilder() {
         this.scanRows = -1;
@@ -54,6 +55,10 @@ public class ShopifyRequestBuilder {
         if (scanFrom.equals("first")) arguments.append("(first:" + scanRows);
         else if (scanFrom.equals("last")) arguments.append("(last:" + scanRows);
 
+        if(this.nextPageCursor != null) {
+            arguments.append(",after:\\\"" + this.nextPageCursor + "\\\"");
+        }
+
         if (queryString != null) {
             arguments.append(",query:\\\"" + queryString + "\\\"");
         }
@@ -82,6 +87,11 @@ public class ShopifyRequestBuilder {
 
     public ShopifyRequestBuilder withQuery(String queryString) {
         this.queryString = queryString;
+        return this;
+    }
+
+    public ShopifyRequestBuilder withNextPageCursor(String nextPageCursor) {
+        this.nextPageCursor = nextPageCursor;
         return this;
     }
 }

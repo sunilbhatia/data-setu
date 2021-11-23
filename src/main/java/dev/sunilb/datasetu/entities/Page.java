@@ -2,18 +2,18 @@ package dev.sunilb.datasetu.entities;
 
 public class Page {
 
-    final private int rowCount;
+    final private long rowCount;
     final private String nextPageToken;
 
     public Page() {
         this(0, "");
     }
 
-    public Page(int rowCount) {
+    public Page(long rowCount) {
         this(rowCount, "");
     }
 
-    public Page(int rowCount, String nextPageToken) {
+    public Page(long rowCount, String nextPageToken) {
         this.rowCount = rowCount;
         this.nextPageToken = nextPageToken;
     }

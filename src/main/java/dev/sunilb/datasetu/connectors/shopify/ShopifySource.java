@@ -26,6 +26,7 @@ public class ShopifySource implements DataSetuSource {
     }
 
     private ShopifyAdminRequest getShopifyAdminRequest() {
+        shopifyAdminSpecification.updateCursor(this.page);
         String shopifyAdminRequestBody = shopifyAdminSpecification.build();
         String apiPath = getShopifyAdminAPI();
         Map<String, String> headers = getShopifyAdminHeaders();

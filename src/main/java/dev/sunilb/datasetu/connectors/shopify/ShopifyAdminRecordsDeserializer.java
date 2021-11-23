@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
+import dev.sunilb.datasetu.exceptions.DataSetuAPIThrottledException;
 
 import java.io.IOException;
 import java.util.*;
@@ -20,14 +21,28 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     @Override
     public ShopifyAdminRecordsDeserializerResponse deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         JsonNode rootNode = jsonParser.getCodec().readTree(jsonParser);
-        String queryRoot = getQueryRoot(rootNode);
-        boolean hasNext = hasNext(rootNode, queryRoot);
-        JsonNode edgesArray = rootNode.get("data").get(queryRoot).get("edges");
-        String nextPageCursor = getNextPageCursor(edgesArray);
-        List<Map<String, Object>> results = processEdgesAndGetResults(edgesArray);
-        Records records = convertResultsToRecords(results);
-        Page page =  new Page(0, nextPageCursor);
-        ShopifyAdminRecordsDeserializerResponse response = new ShopifyAdminRecordsDeserializerResponse(records, page);
+        return initiateProcessing(rootNode);
+    }
+
+    private ShopifyAdminRecordsDeserializerResponse initiateProcessing(JsonNode rootNode) {
+
+        ShopifyAdminRecordsDeserializerResponse response;
+
+        if (rootNode.get("errors") != null) {
+            response = new ShopifyAdminRecordsDeserializerResponse(true, rootNode.get("errors").get(0).get("message").asText());
+        } else {
+
+            String queryRoot = getQueryRoot(rootNode);
+            ShopifyAdminCost cost = getCostDetails(rootNode);
+            JsonNode edgesArray = rootNode.get("data").get(queryRoot).get("edges");
+            String nextPageCursor = getNextPageCursor(edgesArray);
+            List<Map<String, Object>> results = processEdgesAndGetResults(edgesArray);
+            Records records = convertResultsToRecords(results);
+            Page page = new Page(records.count(), nextPageCursor);
+            boolean hasNext = hasNext(rootNode, queryRoot);
+            response = new ShopifyAdminRecordsDeserializerResponse(records, page, cost, hasNext);
+
+        }
         return response;
     }
 
@@ -39,7 +54,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
             List<String> dataList = new ArrayList<>();
             fieldList.forEach(fieldName -> {
                 String data = null;
-                if(fieldName.endsWith(".edges")) {
+                if (fieldName.endsWith(".edges")) {
                     data = mergeDataEdges((List<Map<String, Object>>) resultMap.get(fieldName));
                 } else {
                     data = (String) resultMap.get(fieldName);
@@ -65,7 +80,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
             mapOfData.forEach((key, value) -> {
                 objectData.append(key);
                 objectData.append("=");
-                objectData.append((String)value);
+                objectData.append((String) value);
                 objectData.append("^^^");
             });
             fieldBuffer.append(objectData);
@@ -91,7 +106,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
         int mapSize = results.size();
         for (int i = 0; i < mapSize; i++) {
             int currentKeySize = results.get(i).keySet().size();
-            if(currentKeySize > maxFieldLength) {
+            if (currentKeySize > maxFieldLength) {
                 maxFieldLength = currentKeySize;
                 maxFieldSet = results.get(i).keySet();
             }
@@ -130,7 +145,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
                 } else if (isArray(value)) {
                     List<Map<String, Object>> resultArray = processEdgesAndGetResults(value);
                     resultArray.forEach(stringObjectMap -> {
-                        Set<String> mapKeySet  = stringObjectMap.keySet();
+                        Set<String> mapKeySet = stringObjectMap.keySet();
                         mapKeySet.forEach(key -> {
                             result.put(fieldName + "." + key, stringObjectMap.get(key));
                         });
@@ -155,7 +170,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
 
         JsonNode node = edgesArray.get(index).get("node");
 
-        if(node == null) {
+        if (node == null) {
             // due to refunds[] that does not have 'node' but 'totalRefundSet' hence if node is not there
             // then get the first key, which in our case is 'totalRefundSet
             String firstKeyInObject = edgesArray.get(index).fields().next().getKey();
@@ -200,6 +215,18 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
         JsonNode pageInfoNode = node.get("data").get(queryRoot).get("pageInfo");
         if (pageInfoNode == null) return false;
         return pageInfoNode.get("hasNextPage").asBoolean();
+    }
+
+    private ShopifyAdminCost getCostDetails(JsonNode node) {
+        JsonNode costNode = node.get("extensions").get("cost");
+        if (costNode == null) return null;
+
+        ShopifyAdminCost cost = new ShopifyAdminCost();
+        cost.actualQueryCost = costNode.get("actualQueryCost").asInt();
+        cost.currentlyAvailable = costNode.get("throttleStatus").get("currentlyAvailable").asInt();
+        cost.restoreRate = costNode.get("throttleStatus").get("restoreRate").asInt();
+
+        return cost;
     }
 
     private String getQueryRoot(JsonNode rootNode) {
