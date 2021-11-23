@@ -30,9 +30,9 @@ public class ShopifyAdminApp {
         ShopifyAdminSpecification shopifyAdminSpecification = ShopifyAdminSpecification.Builder()
                 .forStore(storeId)
                 .withQueryRoot("orders")
-                .first(20)
+                .first(30)
                 .withFields("displayFulfillmentStatus displayFinancialStatus cancelledAt name createdAt currentTotalPriceSet { presentmentMoney {amount} shopMoney {amount} } billingAddress { city country zip } email, currencyCode customer { id firstName lastName } refunds (first:5) {  totalRefundedSet { presentmentMoney {amount} shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle }  }  } discountCode")
-                .withQuery("updated_at:>'2021-11-23'");
+                .withQuery("updated_at:>'2020-01-01'");
 
         ShopifySource sSource = ShopifySource.Builder()
                 .withAuthToken(shopifyAccessToken)

@@ -50,8 +50,6 @@ public class ShopifyAdminSpecification {
 
         String jsonRequestBody = builder.build();
 
-        System.out.println(jsonRequestBody);
-
         return jsonRequestBody;
     }
 
