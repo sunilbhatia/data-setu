@@ -29,7 +29,13 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
         ShopifyAdminRecordsDeserializerResponse response;
 
         if (rootNode.get("errors") != null) {
-            response = new ShopifyAdminRecordsDeserializerResponse(true, rootNode.get("errors").get(0).get("message").asText());
+            String message = rootNode.get("errors").get(0).get("message").asText();
+
+            if(message.equals("Throttled"))
+                response = new ShopifyAdminRecordsDeserializerResponse(true, message);
+            else
+                response = new ShopifyAdminRecordsDeserializerResponse(false, message);
+
         } else {
 
             String queryRoot = getQueryRoot(rootNode);
@@ -47,6 +53,9 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     }
 
     private Records convertResultsToRecords(List<Map<String, Object>> results) {
+
+        if(results.size() == 0) return new Records();
+
         List<String> fieldList = getFieldsList(results);
         Records records = new Records(fieldList);
 

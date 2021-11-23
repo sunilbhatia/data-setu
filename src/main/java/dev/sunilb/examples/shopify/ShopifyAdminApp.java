@@ -30,8 +30,9 @@ public class ShopifyAdminApp {
         ShopifyAdminSpecification shopifyAdminSpecification = ShopifyAdminSpecification.Builder()
                 .forStore(storeId)
                 .withQueryRoot("orders")
-                .first(30)
-                .withFields("name createdAt currentTotalPriceSet { presentmentMoney {amount} shopMoney {amount} } billingAddress { city country zip } email, currencyCode refunds (first:100) {  totalRefundedSet { presentmentMoney {amount} shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle }  }  } discountCode");
+                .first(20)
+                .withFields("displayFulfillmentStatus displayFinancialStatus cancelledAt name createdAt currentTotalPriceSet { presentmentMoney {amount} shopMoney {amount} } billingAddress { city country zip } email, currencyCode customer { id firstName lastName } refunds (first:5) {  totalRefundedSet { presentmentMoney {amount} shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle }  }  } discountCode")
+                .withQuery("updated_at:>'2021-11-23'");
 
         ShopifySource sSource = ShopifySource.Builder()
                 .withAuthToken(shopifyAccessToken)
@@ -45,6 +46,10 @@ public class ShopifyAdminApp {
             try {
 
                 Records r = sa.getRecords();
+                String fields[] = r.getFields();
+                for (int i = 0; i < fields.length; i++) {
+                    System.out.println(fields[i]);
+                }
                 System.out.println(sa.getBalanceQueryCost() + ":" + sa.getCurrentQueryCost() + ":" + sa.getRestoreRate());
 
                 for (int i = 0; i < r.count(); i++) {

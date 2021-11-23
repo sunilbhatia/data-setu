@@ -7,6 +7,7 @@ import dev.sunilb.datasetu.connectors.DataSetuSource;
 import dev.sunilb.datasetu.entities.Page;
 import dev.sunilb.datasetu.entities.Records;
 import dev.sunilb.datasetu.exceptions.DataSetuAPIThrottledException;
+import dev.sunilb.datasetu.exceptions.DataSetuException;
 
 public class ShopifyAdmin {
 
@@ -37,14 +38,17 @@ public class ShopifyAdmin {
         try {
             shopifyResponse = getShopifyAdminResponse();
 
-            if (!shopifyResponse.isThrottled()) {
+            if (shopifyResponse.isThrottled() == false && shopifyResponse.getApiErrorMessage() == null) {
                 records = shopifyResponse.getRecords();
                 this.page = shopifyResponse.getPage();
                 this.shopifySource.updatePage(this.page);
                 this.hasNext = shopifyResponse.hasNext();
                 this.cost = shopifyResponse.getCostDetails();
-            } else {
-                throw new DataSetuAPIThrottledException("Got throttled from Shopify Admin API Exception : " + shopifyResponse.getThrottledMessage());
+            } else if (shopifyResponse.isThrottled() == false && shopifyResponse.getApiErrorMessage() != null) {
+                throw new DataSetuException("API Failed with message: " + shopifyResponse.getApiErrorMessage());
+            }
+            else {
+                throw new DataSetuAPIThrottledException("Got throttled from Shopify Admin API Exception : " + shopifyResponse.getApiErrorMessage());
             }
 
         } catch (JsonProcessingException e) {

@@ -6,15 +6,15 @@ import dev.sunilb.datasetu.entities.Records;
 public class ShopifyAdminRecordsDeserializerResponse {
 
     private boolean isThrottled;
-    private String throttledMessage;
+    private String apiErrorMessage;
     private Records records;
     private Page page;
     private ShopifyAdminCost cost;
     private boolean hasNext;
 
-    public ShopifyAdminRecordsDeserializerResponse(boolean isThrottled, String throttledMessage) {
+    public ShopifyAdminRecordsDeserializerResponse(boolean isThrottled, String apiErrorMessage) {
         this.isThrottled = isThrottled;
-        this.throttledMessage = throttledMessage;
+        this.apiErrorMessage = apiErrorMessage;
     }
 
     public ShopifyAdminRecordsDeserializerResponse(Records records, Page page, ShopifyAdminCost cost, boolean hasNext) {
@@ -40,8 +40,8 @@ public class ShopifyAdminRecordsDeserializerResponse {
         return this.isThrottled;
     }
 
-    public String getThrottledMessage() {
-        return this.throttledMessage;
+    public String getApiErrorMessage() {
+        return this.apiErrorMessage;
     }
 
     public boolean hasNext() {
