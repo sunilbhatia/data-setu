@@ -29,9 +29,9 @@ public class ShopifyAdminApp {
 
         ShopifyAdminSpecification shopifyAdminSpecification = ShopifyAdminSpecification.Builder()
                 .forStore(storeId)
-                .withQueryRoot("orders")
-                .first(30)
-                .withFields("displayFulfillmentStatus displayFinancialStatus cancelledAt name createdAt currentTotalPriceSet { shopMoney {amount} } billingAddress { city country zip } email, currencyCode customer { id } refunds (first:5) {  totalRefundedSet { shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle originalUnitPriceSet {shopMoney {amount}  }}  }  } discountCode");
+                .withQueryRoot("customers")
+                .first(50)
+                .withFields("id firstName lastName email phone acceptsMarketing createdAt updatedAt");
 //                .withQuery("updated_at:>'2020-01-01'");
 
         ShopifySource sSource = ShopifySource.Builder()
@@ -39,7 +39,7 @@ public class ShopifyAdminApp {
                 .withSpecification(shopifyAdminSpecification)
                 .build();
 
-        String printableFieldNames = "refunds.shopMoney.amount,cancelledAt,lineItems.edges,currentTotalPriceSet.shopMoney.amount,displayFulfillmentStatus,displayFinancialStatus,createdAt,billingAddress.zip,customer.id,discountCode,billingAddress.city,name,currencyCode,billingAddress.country,email";
+        String printableFieldNames = "id,firstName,lastName,email,phone,acceptsMarketing,createdAt,updatedAt";
 
         ShopifyAdmin sa = new ShopifyAdmin(sSource, printableFieldNames);
 

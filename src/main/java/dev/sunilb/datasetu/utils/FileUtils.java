@@ -8,7 +8,6 @@ import java.util.Date;
 
 public class FileUtils {
     public static void saveResponseStringToFile(String fileName, HttpResponse<String> response) {
-        Date d = new Date();
         File output = new File(fileName);
         FileWriter writer = null;
         try {
