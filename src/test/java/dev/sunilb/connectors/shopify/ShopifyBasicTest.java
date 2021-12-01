@@ -28,17 +28,17 @@ public class ShopifyBasicTest {
             String jsonOrderCustomer = getResourceStreamAsString("shopify/responses/order-customer/basic-order-customer.json");
             ShopifySource shopifyOrderCustomerSource = mock(ShopifySource.class);
             when(shopifyOrderCustomerSource.fetch()).thenReturn(jsonOrderCustomer);
-            this.saOrderCustomer = new ShopifyAdmin(shopifyOrderCustomerSource);
+            this.saOrderCustomer = new ShopifyAdmin(shopifyOrderCustomerSource, "");
 
             String jsonOrderCustomerWithRefunds = getResourceStreamAsString("shopify/responses/order-customer/basic-order-customer-with-refund-array.json");
             ShopifySource shopifyOrderCustomerSourceWithRefunds = mock(ShopifySource.class);
             when(shopifyOrderCustomerSourceWithRefunds.fetch()).thenReturn(jsonOrderCustomerWithRefunds);
-            this.saOrderCustomerWithRefunds = new ShopifyAdmin(shopifyOrderCustomerSourceWithRefunds);
+            this.saOrderCustomerWithRefunds = new ShopifyAdmin(shopifyOrderCustomerSourceWithRefunds, "");
 
             String jsonCustomer = getResourceStreamAsString("shopify/responses/order-customer/basic-customer.json");
             ShopifySource shopifyCustomerSource = mock(ShopifySource.class);
             when(shopifyCustomerSource.fetch()).thenReturn(jsonCustomer);
-            this.saCustomer = new ShopifyAdmin(shopifyCustomerSource);
+            this.saCustomer = new ShopifyAdmin(shopifyCustomerSource, "");
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -39,7 +39,9 @@ public class ShopifyAdminApp {
                 .withSpecification(shopifyAdminSpecification)
                 .build();
 
-        ShopifyAdmin sa = new ShopifyAdmin(sSource);
+        String printableFieldNames = "refunds.shopMoney.amount,cancelledAt,lineItems.edges,currentTotalPriceSet.shopMoney.amount,displayFulfillmentStatus,displayFinancialStatus,createdAt,billingAddress.zip,customer.id,discountCode,billingAddress.city,name,currencyCode,billingAddress.country,email";
+
+        ShopifyAdmin sa = new ShopifyAdmin(sSource, printableFieldNames);
 
         while (sa.hasNext()) {
 
@@ -65,7 +67,7 @@ public class ShopifyAdminApp {
                     }
                 } else {
                     try {
-                        System.out.println("Sleeping for 5 seconds after writing file...");
+                        System.out.println("Sleeping for 5 second after writing file...");
                         Thread.sleep(5000);
                     } catch (InterruptedException e1) {
                         System.out.println("Interrupted 5 second thread sleep");

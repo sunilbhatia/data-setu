@@ -12,20 +12,22 @@ import dev.sunilb.datasetu.exceptions.DataSetuException;
 public class ShopifyAdmin {
 
     private final DataSetuSource shopifySource;
+    private final String printableFieldNames;
     private Page page;
     private boolean hasNext;
     private ShopifyAdminCost cost;
 
-    public ShopifyAdmin(ShopifySource shopifySource) {
+    public ShopifyAdmin(ShopifySource shopifySource, String printableFieldNames) {
         this.shopifySource = shopifySource;
+        this.printableFieldNames = printableFieldNames;
     }
 
     private ShopifyAdminRecordsDeserializerResponse getShopifyAdminResponse() throws JsonProcessingException {
-        String json = shopifySource.fetch();
+        final String json = shopifySource.fetch();
 
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(ShopifyAdminRecordsDeserializerResponse.class, new ShopifyAdminRecordsDeserializer(ShopifyAdminRecordsDeserializerResponse.class));
+        module.addDeserializer(ShopifyAdminRecordsDeserializerResponse.class, new ShopifyAdminRecordsDeserializer(ShopifyAdminRecordsDeserializerResponse.class, this.printableFieldNames));
         mapper.registerModule(module);
         return mapper.readValue(json, ShopifyAdminRecordsDeserializerResponse.class);
     }

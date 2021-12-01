@@ -1,11 +1,6 @@
 package dev.sunilb.datasetu.connectors.shopify;
 
-import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRequest;
-import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsSpecification;
 import dev.sunilb.datasetu.entities.Page;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ShopifyAdminSpecification {
     private String queryRoot;

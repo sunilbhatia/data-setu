@@ -14,8 +14,11 @@ import java.util.*;
 
 public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdminRecordsDeserializerResponse> {
 
-    public ShopifyAdminRecordsDeserializer(Class<?> vc) {
+    private final String printableFieldNames;
+
+    public ShopifyAdminRecordsDeserializer(Class<?> vc, String printableFieldNames) {
         super(vc);
+        this.printableFieldNames = printableFieldNames;
     }
 
     @Override
@@ -101,9 +104,21 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
 
     private List<String> getFieldsList(List<Map<String, Object>> results) {
 
-        Set<String> maxFieldSet = getMaxFieldList(results);
+        List<String> fieldsList = null;
+        if(this.printableFieldNames.equals("")) {
+            Set<String> maxFieldSet = getMaxFieldList(results);
+            fieldsList = new ArrayList<>(maxFieldSet);
+        } else {
+            fieldsList = getPrintableFieldList();
+        }
 
-        List<String> fieldsList = new ArrayList<>(maxFieldSet);
+        return fieldsList;
+    }
+
+    private List<String> getPrintableFieldList() {
+        List<String> fieldsList = new ArrayList<>();
+        String [] fields = this.printableFieldNames.split(",");
+        fieldsList.addAll(List.of(fields));
         return fieldsList;
     }
 
