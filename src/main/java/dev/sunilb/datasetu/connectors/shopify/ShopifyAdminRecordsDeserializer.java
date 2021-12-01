@@ -105,7 +105,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
     private List<String> getFieldsList(List<Map<String, Object>> results) {
 
         List<String> fieldsList = null;
-        if(this.printableFieldNames.equals("")) {
+        if (this.printableFieldNames.equals("")) {
             Set<String> maxFieldSet = getMaxFieldList(results);
             fieldsList = new ArrayList<>(maxFieldSet);
         } else {
@@ -117,7 +117,7 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
 
     private List<String> getPrintableFieldList() {
         List<String> fieldsList = new ArrayList<>();
-        String [] fields = this.printableFieldNames.split(",");
+        String[] fields = this.printableFieldNames.split(",");
         fieldsList.addAll(List.of(fields));
         return fieldsList;
     }
@@ -181,6 +181,8 @@ public class ShopifyAdminRecordsDeserializer extends StdDeserializer<ShopifyAdmi
                     valueMap.forEach((objKey, objValue) -> {
                         result.put(fieldName + "." + objKey, objValue);
                     });
+                } else {
+                    result.put(fieldName, value.asText());
                 }
             }
 
