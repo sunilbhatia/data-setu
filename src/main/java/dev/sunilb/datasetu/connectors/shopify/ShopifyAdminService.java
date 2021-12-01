@@ -1,6 +1,5 @@
 package dev.sunilb.datasetu.connectors.shopify;
 
-import dev.sunilb.datasetu.connectors.googleanalytics.GoogleAnalyticsRequest;
 import dev.sunilb.datasetu.exceptions.DataSetuAuthException;
 import dev.sunilb.datasetu.exceptions.DataSetuException;
 

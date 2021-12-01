@@ -75,4 +75,8 @@ public class ShopifyAdmin {
     public long getRestoreRate() {
         return this.cost.restoreRate;
     }
+
+    public boolean shouldWait() {
+        return this.getBalanceQueryCost() - (this.getCurrentQueryCost() * 2) <= 0;
+    }
 }

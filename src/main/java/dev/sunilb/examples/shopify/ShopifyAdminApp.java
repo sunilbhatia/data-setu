@@ -31,8 +31,8 @@ public class ShopifyAdminApp {
                 .forStore(storeId)
                 .withQueryRoot("orders")
                 .first(30)
-                .withFields("displayFulfillmentStatus displayFinancialStatus cancelledAt name createdAt currentTotalPriceSet { presentmentMoney {amount} shopMoney {amount} } billingAddress { city country zip } email, currencyCode customer { id firstName lastName } refunds (first:5) {  totalRefundedSet { presentmentMoney {amount} shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle }  }  } discountCode")
-                .withQuery("updated_at:>'2020-01-01'");
+                .withFields("displayFulfillmentStatus displayFinancialStatus cancelledAt name createdAt currentTotalPriceSet { shopMoney {amount} } billingAddress { city country zip } email, currencyCode customer { id } refunds (first:5) {  totalRefundedSet { shopMoney {amount} }   } lineItems (first: 10){ edges{ node { quantity title sku variantTitle originalUnitPriceSet {shopMoney {amount}  }}  }  } discountCode");
+//                .withQuery("updated_at:>'2020-01-01'");
 
         ShopifySource sSource = ShopifySource.Builder()
                 .withAuthToken(shopifyAccessToken)
@@ -41,7 +41,7 @@ public class ShopifyAdminApp {
 
         ShopifyAdmin sa = new ShopifyAdmin(sSource);
 
-        while(sa.hasNext()) {
+        while (sa.hasNext()) {
 
             try {
 
@@ -56,17 +56,25 @@ public class ShopifyAdminApp {
                     System.out.println(r.getRow(i));
                 }
 
-                if(sa.getBalanceQueryCost() - (sa.getCurrentQueryCost() * 2) <= 0) {
+                if (sa.shouldWait()) {
                     try {
                         System.out.println("\n\nSleeping for 20 seconds as we will have a cost over run\n\n");
                         Thread.sleep(20000);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
+                } else {
+                    try {
+                        System.out.println("Sleeping for 5 seconds after writing file...");
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e1) {
+                        System.out.println("Interrupted 5 second thread sleep");
+                        System.out.println(e1);
+                    }
                 }
 
 
-            } catch(DataSetuAPIThrottledException e) {
+            } catch (DataSetuAPIThrottledException e) {
                 try {
                     System.out.println("\n\nSleeping for 20 seconds as we have already Throttled...\n\n");
                     Thread.sleep(20000);
