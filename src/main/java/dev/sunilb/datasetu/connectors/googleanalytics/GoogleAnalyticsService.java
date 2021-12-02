@@ -1,5 +1,6 @@
 package dev.sunilb.datasetu.connectors.googleanalytics;
 
+import dev.sunilb.datasetu.exceptions.DataSetuAccessTokenExpiredException;
 import dev.sunilb.datasetu.exceptions.DataSetuAuthException;
 import dev.sunilb.datasetu.exceptions.DataSetuException;
 
@@ -35,8 +36,10 @@ public class GoogleAnalyticsService {
         }
 
         if (response.statusCode() != 200) {
-            if (response.statusCode() == 401 || response.statusCode() == 403) {
-                throw new DataSetuAuthException("Google Auth Exception: " + response.body());
+            if (response.statusCode() == 401) {
+                throw new DataSetuAccessTokenExpiredException("Google Analytics Access Token Has Expired. Need to renew: " + response.body());
+            } else if (response.statusCode() == 403) {
+                throw new DataSetuAuthException("Google Analytics: User does not have access to property: " + response.body());
             } else if (response.statusCode() == 400) {
                 throw new DataSetuException("Bad Request. Response from GoogleAnalytics: " + response.body());
             } else {
